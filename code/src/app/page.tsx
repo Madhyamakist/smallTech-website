@@ -1,7 +1,5 @@
-import Static from "./static/page";
-
 export default function Home() {
   return (
-    <Static />
+    <h1 className="mt-4">smallTech Enterprise</h1>
   );
 }
