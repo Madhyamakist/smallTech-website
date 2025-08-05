@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: var(--color-cream);
-  --foreground: var(--color-licorice);
+  --background: var(--color-caput);
+  --foreground: var(--color-cinereous);
   --font-sans: var(--font-montserrat);
 }
 
