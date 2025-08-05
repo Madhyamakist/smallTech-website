@@ -12,10 +12,7 @@ export default function Header() {
                     height={0}
                 />
             </div>
-            <div className="flex flex-col justify-end">
-                <h2 className="">smallTech</h2>
-                <p className="font-normal leading-none">a madhyamakist enterprise</p>
-            </div>
+            <h3>Madhyamakist</h3>
         </header>
     );
 }
