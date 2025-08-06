@@ -5,7 +5,7 @@ export default function Section({ id, title, mainHeader, content }: SectionConte
 
         <section
             id={id}
-            className="h-screen snap-start flex flex-col"
+            className="h-screen snap-start snap-always flex flex-col"
         >
             {mainHeader && <Header />}
             <div className="flex-grow flex flex-col m-4">

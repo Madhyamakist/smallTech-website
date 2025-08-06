@@ -23,3 +23,9 @@ body {
   margin: 0;
   padding: 0;
 }
+/* For better snap behavior on iOS Safari */
+html, body {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
