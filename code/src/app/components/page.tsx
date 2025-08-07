@@ -1,6 +1,6 @@
 import Header from "./core/header"
-import { SectionContent } from "../models/sectionContent";
-export default function Section({ id, mainHeader, content }: SectionContent) {
+import { PageContent } from "../models/pageContent";
+export default function Page({ id, mainHeader, content }: PageContent) {
     return (
 
         <section

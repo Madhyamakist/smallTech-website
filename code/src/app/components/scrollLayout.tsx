@@ -1,18 +1,17 @@
 'use client';
-import Section from './section';
-import { sections } from '../constants/section';
 import { useScrollSync } from '../hooks/useScrollSync';
-
+import Page from './page';
+import { pages } from '../constants/page';
 export default function ScrollLayout() {
 useScrollSync()
   return (
     <main className="h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
-      {sections.map((section) => (
-        <Section
-          key={section.id}
-          id={section.id}
-          mainHeader={section.mainHeader}
-          content={section.content}
+      {pages.map((page) => (
+        <Page
+          key={page.id}
+          id={page.id}
+          mainHeader={page.mainHeader}
+          content={page.content}
         />
       ))}
     </main>

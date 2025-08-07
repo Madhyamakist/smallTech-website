@@ -5,22 +5,22 @@ import { usePathname } from 'next/navigation';
 
 
 export function useScrollSync() {
-//   const router = useRouter();
+  //   const router = useRouter();
   const pathname = usePathname();
   const observer = useRef<IntersectionObserver | null>(null);
 
 
   useEffect(() => {
-    const sectionId = pathname === '/' ? 'landing' : pathname.slice(1);
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'instant' });
+    const pageId = pathname === '/' ? 'landing' : pathname.slice(1);
+    const page = document.getElementById(pageId);
+    if (page) {
+      page.scrollIntoView({ behavior: 'instant' });
     }
   }, [pathname]);
 
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section');
+    const pages = document.querySelectorAll('section');
 
 
     observer.current = new IntersectionObserver(
@@ -38,7 +38,7 @@ export function useScrollSync() {
     );
 
 
-    sections.forEach((section) => observer.current?.observe(section));
+    pages.forEach((page) => observer.current?.observe(page));
     return () => observer.current?.disconnect();
   }, [pathname]);
 }
