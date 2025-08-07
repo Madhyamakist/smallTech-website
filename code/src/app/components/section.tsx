@@ -1,6 +1,6 @@
 import Header from "./core/header"
 import { SectionContent } from "../models/sectionContent";
-export default function Section({ id, title, mainHeader, content }: SectionContent) {
+export default function Section({ id, mainHeader, content }: SectionContent) {
     return (
 
         <section
@@ -9,7 +9,7 @@ export default function Section({ id, title, mainHeader, content }: SectionConte
         >
             {mainHeader && <Header />}
             <div className="flex-grow flex flex-col m-4">
-                <h1>{title}</h1>
+              
                 <div>{content}</div>
             </div>
         </section>
