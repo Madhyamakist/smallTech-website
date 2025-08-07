@@ -25,9 +25,9 @@ export function useScrollSync() {
 
     observer.current = new IntersectionObserver(
       (entries) => {
-        const visible = entries.find((entry) => entry.isIntersecting);
-        if (visible) {
-          const id = visible.target.id;
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          const id = visibleEntry.target.id;
           const newPath = id === 'landing' ? '/' : `/${id}`;
           if (newPath !== pathname) {
             window.history.replaceState(null, '', newPath);
