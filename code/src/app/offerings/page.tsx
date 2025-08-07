@@ -1,9 +1,7 @@
-import FullPageScroll from "../components/fullPageScroll";
+import ScrollLayout from "../components/scrollLayout";
 
 export default function OfferingsPage() {
-    return (
-        <div>
-            <FullPageScroll />
-        </div>
-    );
+  return (
+    <ScrollLayout />
+  );
 }

@@ -1,15 +1,15 @@
+
 'use client';
 import { useEffect, useRef } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import Section from './section';
-import { sections } from '../constants/section';
+import { usePathname } from 'next/navigation';
 
-export default function FullPageScroll() {
-  const router = useRouter();
+
+export function useScrollSync() {
+//   const router = useRouter();
   const pathname = usePathname();
   const observer = useRef<IntersectionObserver | null>(null);
 
-  // Scroll to section based on current pathname
+
   useEffect(() => {
     const sectionId = pathname === '/' ? 'landing' : pathname.slice(1);
     const section = document.getElementById(sectionId);
@@ -18,9 +18,10 @@ export default function FullPageScroll() {
     }
   }, [pathname]);
 
-  // Change URL as user scrolls
+
   useEffect(() => {
-    const sectionEls = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('section');
+
 
     observer.current = new IntersectionObserver(
       (entries) => {
@@ -29,29 +30,18 @@ export default function FullPageScroll() {
           const id = visible.target.id;
           const newPath = id === 'landing' ? '/' : `/${id}`;
           if (newPath !== pathname) {
-            router.replace(newPath);
+            window.history.replaceState(null, '', newPath);
           }
         }
       },
       { threshold: 0.6 }
     );
 
-    sectionEls.forEach((section) => observer.current!.observe(section));
 
+    sections.forEach((section) => observer.current?.observe(section));
     return () => observer.current?.disconnect();
-  }, [router, pathname]);
-
-  return (
-    <main className="h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
-      {sections.map((section) => (
-        <Section
-          key={section.id}
-          id={section.id}
-          title={section.title}
-          mainHeader={section.mainHeader}
-          content={section.content}
-        />
-      ))}
-    </main>
-  );
+  }, [pathname]);
 }
+
+
+

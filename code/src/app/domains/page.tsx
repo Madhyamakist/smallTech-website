@@ -1,5 +1,5 @@
-import FullPageScroll from "../components/fullPageScroll";
+import ScrollLayout from "../components/scrollLayout";
 
 export default function DomainsPage() {
-  return <FullPageScroll />;
+  return <ScrollLayout />;
 }
