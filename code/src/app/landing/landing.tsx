@@ -3,14 +3,15 @@ import Header from "../components/core/header"
 
 export default function Landing() {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
       <Header />
 
       <h1 className="absolute top-[15%] ">
         AI-First Tech Services
       </h1>
 
-      <div className="absolute top-[10%] right-0 translate-x-1/3 translate-y-1/5 ">
+      {/* <div className="absolute top-[10%] right-0 translate-x-1/3 translate-y-1/5 "> */}
+         <div className="absolute top-[20%] right-[-20%] md:right-[-10%] lg:right-[15%] lg:top-[10%] w-[90%] sm:w-[60%] md:w-[40%]">
         <Image
           src="/globe.png"
           width={1000}
@@ -30,7 +31,6 @@ export default function Landing() {
           our service provider network has got all your needs covered
         </h2>
       </div>
-
     </div>
 
   );
