@@ -4,6 +4,7 @@
 @import "./components/typography.css";
 @import './components/common/dropdown.css';
 @import './components/common/card.css';
+@import './domains//domains.css';
 
 @theme inline {
   --color-cream: #c4bbaf;
@@ -14,6 +15,7 @@
   --color-caput: #5A2A27;
   --color-licorice: #1D0E0C;
   --color-khaki:#A5978B;
+  --color-rose:#B8887A;
 }
 
 body {
