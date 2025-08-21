@@ -13,7 +13,7 @@ export default function Landing() {
       {/* <div className="absolute top-[10%] right-0 translate-x-1/3 translate-y-1/5 "> */}
          <div className="absolute top-[20%] right-[-20%] md:right-[-10%] lg:right-[15%] lg:top-[10%] w-[90%] sm:w-[60%] md:w-[40%]">
         <Image
-          src="/globe.png"
+          src="./globe.png"
           width={1000}
           height={1000}
           alt="globe"
