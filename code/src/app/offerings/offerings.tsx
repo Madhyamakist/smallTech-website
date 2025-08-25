@@ -14,7 +14,7 @@ export default function Offerings() {
       {techItems.map((icon, idx) => (
         <div key={idx} className="flex justify-center">
           <Image
-            src={`/${icon}`}
+            src={`./${icon}`}
             alt={icon}
             width={50}
             height={50}

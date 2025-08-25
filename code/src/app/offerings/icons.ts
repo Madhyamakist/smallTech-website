@@ -1,11 +1,11 @@
 export const offeringItems = [
   [
-    { src: "/consultation.png", label: "High Fidelity Planning" },
-    { src: "/draw.png", label: "Design-First" },
+    { src: "./consultation.png", label: "High Fidelity Planning" },
+    { src: "./draw.png", label: "Design-First" },
   ],
   [
-    { src: "/file-management.png", label: "Risk Driven Project Management" },
-    { src: "/marketplace.png", label: "Continuous Delivery" },
+    { src: "./file-management.png", label: "Risk Driven Project Management" },
+    { src: "./marketplace.png", label: "Continuous Delivery" },
   ],
 ];
 export const techItems = [
