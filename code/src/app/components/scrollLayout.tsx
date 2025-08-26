@@ -1,6 +1,6 @@
 'use client';
 import { useScrollSync } from '../hooks/useScrollSync';
-import Page from './page';
+import Page from './pageContent';
 import Landing from '../landing/landing';
 import Domains from '../domains/domains';
 import Offerings from '../offerings/offerings';
