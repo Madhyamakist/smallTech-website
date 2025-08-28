@@ -1,70 +1,68 @@
 "use client";
-
-import { useState, useRef, useEffect } from "react";
+import { useChat } from "../hooks/useChat";
 
 export default function Chat() {
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
-  const [input, setInput] = useState("");
-  const chatboxRef = useRef<HTMLDivElement>(null);
-  const sessionId = useRef<string>(crypto.randomUUID());
-
-  const sendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const userMsg = input.trim();
-    if (!userMsg) return;
-
-    setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
-    setInput("");
-
-    try {
-      const res = await fetch("http://localhost:5000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: userMsg, session_id: sessionId.current }),
-      });
-      const data = await res.json();
-      setMessages((prev) => [
-        ...prev,
-        { sender: data.success ? "Bot" : "Error", text: data.success ? data.response : data.error || "Something went wrong." }
-      ]);
-    } catch {
-      setMessages((prev) => [...prev, { sender: "Error", text: "Network or server issue." }]);
-    }
-  };
-
-  useEffect(() => {
-    if (chatboxRef.current) {
-      chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
-    }
-  }, [messages]);
+  const {
+    chatBoxText,
+    messages,
+    input,
+    isClient,
+    sendMessage,
+    setInput,
+  } = useChat();
 
   return (
-    <div className="flex flex-col items-center p-6">
-      <h2 className="mb-4">Chat with LLM</h2>
+    <div className="flex flex-col w-full px-4 py-6 relative">
+      <h2 className="text-lg font-semibold mb-2 text-start">Meet Our AI Agent</h2>
+      <p className="text-sm mb-6 text-start">
+        Talk to our smart assistant to explore services
+      </p>
+
 
       <div
-        ref={chatboxRef}
-        className=" bg-gray-50 p-4 h-100 w-full max-w-md rounded overflow-y-auto"
+        ref={chatBoxText}
+        className="flex flex-col overflow-y-auto space-y-3 px-2 pb-4"
+        style={{
+          flexGrow: 1,
+          maxHeight: "calc(100vh - 220px)",
+        }}
+
       >
         {messages.map((msg, i) => (
-          <div key={i} className="mb-2">
-            <b>{msg.sender}:</b> {msg.text}
+          <div
+            key={i}
+            className={`max-w-[85%] px-3 py-2 rounded-lg text-sm ${msg.sender === "You"
+                ? "bg-brown self-end text-cinereous font-semibold"
+                : "bg-cinereous self-start text-brown font-semibold"
+              }`}
+          >
+            {msg.text}
           </div>
         ))}
       </div>
 
-      <form onSubmit={sendMessage} className="flex w-full max-w-md mt-2">
-        <input
-          type="text"
-          className="flex-1 border border-gray-300 p-2 rounded-l"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          required
-        />
-        <button type="submit" className="bg-blue-600 text-white px-4 rounded-r hover:bg-blue-700">
-          Send
-        </button>
-      </form>
+      {isClient && (
+        <form
+          onSubmit={sendMessage}
+          className="flex border border-2 border-black items-center w-full max-w-md bg-rose rounded-xl px-3 py-2"
+        >
+          <input
+            type="text"
+            className="flex-1 text-brown placeholder-brown outline-none "
+            placeholder="Type a message"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className=" rounded-full text-brown hover:bg-cinereous transition"
+          >
+            Send
+          </button>
+        </form>
+      )}
+
     </div>
   );
 }
