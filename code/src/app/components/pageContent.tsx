@@ -5,7 +5,7 @@ export default function Page({ id, content }: PageContent) {
             id={id}
             className="min-h-screen snap-start snap-always flex flex-col"
         >
-            <div className="flex-grow flex flex-col m-4">
+            <div className="flex-grow flex flex-col mx-[5%] mt-[2%]">
                 <div>{content}</div>
             </div>
         </section>

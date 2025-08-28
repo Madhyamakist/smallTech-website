@@ -7,8 +7,8 @@ interface CardProps {
 
 export default function Card({ src, label }: CardProps) {
   return (
-    <div className="card flex flex-col items-center">
-      <Image src={src} width={50} height={50} alt={label} />
+    <div className="card flex flex-col items-center justify-center">
+      <Image src={src} width={40} height={0} alt={label} />
       <span className="text-sm font-medium">{label}</span>
     </div>
   );

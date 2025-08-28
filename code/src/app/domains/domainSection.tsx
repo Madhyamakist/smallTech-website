@@ -7,9 +7,9 @@ interface DomainsSectionProps {
 
 export default function DomainsSection({ title, items }: DomainsSectionProps) {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className=" flex flex-col items-center">
       <h1 className="title">{title}</h1>
-      <div className="card-container flex flex-col gap-6 md:gap-0 lg:gap-0">
+      <div className="card-container flex flex-col gap-6 md:gap-0 lg:gap-0 items-center justify-centerp ">
         {items.map((row, idx) => (
           <div
             key={idx}

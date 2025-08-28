@@ -66,7 +66,7 @@ export default function Chat() {
             />
             <button
               type="submit"
-              className="text-brown font-semibold ml-2 hover:text-cinereous transition"
+              className="text-brown font-semibold hover:text-cinereous transition"
             >
               Send
             </button>
