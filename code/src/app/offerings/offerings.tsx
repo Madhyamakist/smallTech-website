@@ -4,7 +4,7 @@ import { offeringItems,techItems } from "./icons";
 
 export default function Offerings() {
   return (
-    <div className="min-h-screen overflow-hidden flex flex-col items-center justify-center relative">
+    <div className="min-h-screen overflow-hidden flex flex-col relative">
 
       <h1 className="title">
         Technologies we support
@@ -25,7 +25,7 @@ export default function Offerings() {
 
       {/* Section 2: Features */}
       <div className=" flex flex-col items-center">
-        <h1 className="title mt-2">What makes us stand out</h1>
+        <h1 className="title">What makes us stand out</h1>
         <div className="card-container flex flex-col gap-6 md:gap-0 lg:gap-0">
           {offeringItems.map((row, idx) => (
             <div
