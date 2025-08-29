@@ -9,6 +9,7 @@ export function useChat() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
@@ -16,6 +17,13 @@ export function useChat() {
     useEffect(() => {
         setIsClient(true);
         sessionId.current = crypto.randomUUID();
+        // Initial bot welcome
+        setMessages([
+            {
+                sender: "Bot",
+                text: "Hi, Welcome to smallTech 👋. I'm here to help with any IT-related questions or concerns you might bring. What brings you to our website today?",
+            },
+        ]);
     }, []);
 
     // Function to handle sending a message to the backend server.
@@ -27,15 +35,25 @@ export function useChat() {
         // Adding user's message to the message list immediately.
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
-
+        // Show typing indicator
+        setIsTyping(true);
         try {
+
+            // Timeout/abort a fetch
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
+
             // Sending message to backend API via POST.
             const res = await fetch("http://localhost:5000/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ input: userMsg, session_id: sessionId.current }),
+                signal: controller.signal,
             });
+            clearTimeout(timeout);
             const data = await res.json();
+            // Hide typing indicator
+            setIsTyping(false);
 
             // Add bot's response
             setMessages((prev) => [
@@ -45,10 +63,16 @@ export function useChat() {
                     text: data.success ? data.response : data.error || "Something went wrong.",
                 },
             ]);
-        } catch {
+        } catch (err: any) {
+            // Hide typing indicator
+            setIsTyping(false);
+            let errorMsg =
+                err.name === "AbortError"
+                    ? "Request timed out. Please try again."
+                    : "Network or server issue.";
             setMessages((prev) => [
                 ...prev,
-                { sender: "Error", text: "Network or server issue." },
+                { sender: "Error", text: errorMsg },
             ]);
         }
     };
@@ -58,13 +82,14 @@ export function useChat() {
         if (chatBoxText.current) {
             chatBoxText.current.scrollTop = chatBoxText.current.scrollHeight;
         }
-    }, [messages]);
+    }, [messages,isTyping]);
 
     return {
         chatBoxText,
         messages,
         input,
         isClient,
+        isTyping,
         sendMessage,
         setInput,
     };
