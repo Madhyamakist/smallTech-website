@@ -44,7 +44,7 @@ export function useChat() {
             const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
 
             // Sending message to backend API via POST.
-            const res = await fetch("http://localhost:5000/chat", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ input: userMsg, session_id: sessionId.current }),
@@ -63,11 +63,11 @@ export function useChat() {
                     text: data.success ? data.response : data.error || "Something went wrong.",
                 },
             ]);
-        } catch (err: any) {
+        } catch (err) {
             // Hide typing indicator
             setIsTyping(false);
-            let errorMsg =
-                err.name === "AbortError"
+            const errorMsg =
+                (err as Error).name === "AbortError"
                     ? "Request timed out. Please try again."
                     : "Network or server issue.";
             setMessages((prev) => [
