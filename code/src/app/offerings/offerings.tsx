@@ -6,7 +6,7 @@ export default function Offerings() {
   return (
     <div className="min-h-screen overflow-hidden flex flex-col relative">
 
-      <h1 className="title">
+      <h1 className="title py-[10%] lg:py-0">
         Technologies we support
       </h1>
 
@@ -16,8 +16,9 @@ export default function Offerings() {
           <Image
             src={`./${icon}`}
             alt={icon}
-            width={50}
-            height={50}
+            width={40}
+            height={0}
+            className="lg:w-15"
           />
         </div>
       ))}
@@ -25,7 +26,7 @@ export default function Offerings() {
 
       {/* Section 2: Features */}
       <div className=" flex flex-col items-center">
-        <h1 className="title">What makes us stand out</h1>
+        <h1 className="title pt-[10%] lg:pt-0">What makes us stand out</h1>
         <div className="card-container flex flex-col gap-6 md:gap-0 lg:gap-0">
           {offeringItems.map((row, idx) => (
             <div
