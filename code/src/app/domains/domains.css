@@ -12,6 +12,6 @@
   @apply w-full
    mx-auto
     gap-6 md:gap-10  
-    py-[10%] ;
+    py-[10%] lg:py-0 ;
 }
 
