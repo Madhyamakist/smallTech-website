@@ -1,4 +1,5 @@
 "use client";
+import Footer from "../components/core/footer";
 import { useChat } from "../hooks/useChat";
 
 export default function Chat() {
@@ -28,10 +29,7 @@ export default function Chat() {
         }}
 
       >
-        <div className="flex flex-col text-xs items-center justify-center text-cream font-thin">
-          <p className="w-50">contact@madhyamakist.com</p>
-          <p className="w-50 mt-3">© 2025 Madhyamakist Pvt. Ltd. All rights reserved.</p>
-        </div>
+       <Footer/>
         {messages.map((msg, i) => (
           <div
             key={i}
