@@ -21,7 +21,7 @@ export default function Landing() {
         />
       </div>
 
-      <div className="absolute left-[10%] top-1/2 max-w-[35%]">
+      <div className="absolute left-[0%] top-[60%] max-w-[35%]">
         <h2 className="leading-tight">
           Integrate AI across your stack and into your existing workflows
         </h2>

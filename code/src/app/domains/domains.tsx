@@ -3,9 +3,9 @@ import { techDomains,businessDomains } from "./constants";
 export default function Domains() {
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center">
+    <div className="max-h-screen">
       <DomainsSection title="Tech Domains" items={techDomains} />
-      <DomainsSection title="Business Domains" items={businessDomains} />
+      <DomainsSection title="Business Categories" items={businessDomains} />
     </div>
   );
 }
