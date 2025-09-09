@@ -1,8 +1,9 @@
+"use client";
 import { useEffect } from "react";
 import ScrollLayout from "../components/scrollLayout";
 
 export default function ChatPage() {
-  //when page loads
+//When the page loads, trigger a Google Ads conversion event 
   useEffect(() => {
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
