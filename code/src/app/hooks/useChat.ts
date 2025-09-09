@@ -29,6 +29,10 @@ export function useChat() {
     // Function to handle sending a message to the backend server.
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Prevent sending if already waiting for a response
+  if (isTyping) return;
+  
         const userMsg = input.trim();
         if (!userMsg) return;
 

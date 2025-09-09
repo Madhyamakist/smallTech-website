@@ -29,7 +29,7 @@ export default function Chat() {
         }}
 
       >
-       <Footer/>
+        <Footer />
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -63,10 +63,12 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               required
+              disabled={isTyping}
             />
             <button
               type="submit"
               className="text-brown font-semibold ml-2 hover:text-cinereous transition"
+              disabled={isTyping}
             >
               Send
             </button>
