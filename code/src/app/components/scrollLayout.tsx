@@ -8,23 +8,24 @@ import Chat from '../chat/chat';
 export default function ScrollLayout() {
 useScrollSync()
   return (
-    <main className="h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
+    <main className="max-h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
       <Page
           key="landing"
           id="landing"
           
           content={<Landing />}
         />
-        <Page
-          key="domains"
-          id="domains"
-          content={<Domains/>}
-        />
          <Page
           key="offerings"
           id="offerings"
           content={<Offerings/>}
         />
+        <Page
+          key="domains"
+          id="domains"
+          content={<Domains/>}
+        />
+        
         <Page
           key="chat"
           id="chat"

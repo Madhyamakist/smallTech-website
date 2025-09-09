@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 .card {
-  @apply w-[104px] h-[83px] bg-rose text-licorice p-4 rounded-sm flex flex-col items-center justify-center my-2;
+  @apply p-3 bg-rose/40 text-licorice rounded-xl flex flex-col items-center justify-center my-2 ;
 }
 
 .title {
-      @apply text-center mb-8 flex justify-start;
+      @apply text-center mb-3 flex justify-start;
 }
 
 .card-container {
-  @apply max-w-md mx-auto mb-12;
+  @apply max-w-md mx-auto mb-[10%];
 }
