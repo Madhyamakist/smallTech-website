@@ -9,7 +9,7 @@ export function useChat() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
-    const [isTyping, setIsTyping] = useState(false);
+    const [isBotProcessing, setisBotProcessing] = useState(false);
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
@@ -31,7 +31,7 @@ export function useChat() {
         e.preventDefault();
 
         // Prevent sending if already waiting for a response
-  if (isTyping) return;
+  if (isBotProcessing) return;
   
         const userMsg = input.trim();
         if (!userMsg) return;
@@ -40,7 +40,7 @@ export function useChat() {
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
         // Show typing indicator
-        setIsTyping(true);
+        setisBotProcessing(true);
         try {
 
             // Timeout/abort a fetch
@@ -57,7 +57,7 @@ export function useChat() {
             clearTimeout(timeout);
             const data = await res.json();
             // Hide typing indicator
-            setIsTyping(false);
+            setisBotProcessing(false);
 
             // Add bot's response
             setMessages((prev) => [
@@ -69,7 +69,7 @@ export function useChat() {
             ]);
         } catch (err) {
             // Hide typing indicator
-            setIsTyping(false);
+            setisBotProcessing(false);
             const errorMsg =
                 (err as Error).name === "AbortError"
                     ? "Request timed out. Please try again."
@@ -86,14 +86,14 @@ export function useChat() {
         if (chatBoxText.current) {
             chatBoxText.current.scrollTop = chatBoxText.current.scrollHeight;
         }
-    }, [messages,isTyping]);
+    }, [messages,isBotProcessing]);
 
     return {
         chatBoxText,
         messages,
         input,
         isClient,
-        isTyping,
+        isBotProcessing,
         sendMessage,
         setInput,
     };
