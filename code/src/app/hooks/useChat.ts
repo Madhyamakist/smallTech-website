@@ -13,6 +13,10 @@ interface HistoryItem {
 // toggle mocks ON/OFF (true = use mock data, false = call API)
 const USE_MOCKS = true;
 
+//UUID Generator
+function generateUUID() {
+    return crypto.randomUUID();
+}
 export function useChat() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -54,7 +58,7 @@ export function useChat() {
                 }
 
                 //real api call
-                const saved = localStorage.getItem("chat_session_id");
+                let saved = localStorage.getItem("chat_session_id");
                 let url = `${process.env.NEXT_PUBLIC_API_URL}/history`;
 
                 if (saved) {
@@ -67,6 +71,7 @@ export function useChat() {
                 if (res.status === 200 || res.status === 201) {
                     sessionId.current = saved || data.session_id;
                     if (!saved) {
+                        saved = generateUUID(); // frontend generates UUID
                         localStorage.setItem("chat_session_id", data.session_id);
                     }
 
