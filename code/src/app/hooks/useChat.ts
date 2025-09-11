@@ -5,6 +5,14 @@ export interface Message {
     text: string;
 }
 
+interface HistoryItem {
+    type: "human" | "ai";
+    content: string;
+}
+
+// toggle mocks ON/OFF (true = use mock data, false = call API)
+const USE_MOCKS = true;
+
 export function useChat() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -13,20 +21,73 @@ export function useChat() {
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
-    // useEffect to set the client flag true after mount.
+    // simple mock data
+    const mockHistory: { session_id: string; history: HistoryItem[] } = {
+        session_id: "mock-session-123",
+        history: [
+            { type: "ai", content: "👋 Hi, I'm your AI assistant. How can I help?" },
+            { type: "human", content: "What services do you provide?" },
+            { type: "ai", content: "We provide IT solutions, cloud setup, and more." },
+        ],
+    };
+
+    const mockBotResponse = (input: string) => ({
+        success: true,
+        response: `(mock) You said: "${input}"`,
+    });
+
+    // initialize session & load history
     useEffect(() => {
         setIsClient(true);
-        sessionId.current = crypto.randomUUID();
-        // Initial bot welcome
-        setMessages([
-            {
-                sender: "Bot",
-                text: "Hi, Welcome to smallTech 👋. I'm here to help with any IT-related questions or concerns you might bring. What brings you to our website today?",
-            },
-        ]);
+
+        const init = async () => {
+            try {
+                if (USE_MOCKS) {
+                    sessionId.current = mockHistory.session_id;
+                    setMessages(
+                        mockHistory.history.map((h) => ({
+                            sender: h.type === "human" ? "You" : "Bot",
+                            text: h.content,
+                        }))
+                    );
+                    return;
+                }
+
+                //real api call
+                const saved = localStorage.getItem("chat_session_id");
+                let url = `${process.env.NEXT_PUBLIC_API_URL}/history`;
+
+                if (saved) {
+                    url += `?session_id=${saved}`;
+                }
+
+                const res = await fetch(url, { method: "GET" });
+                const data = await res.json();
+
+                if (res.status === 200 || res.status === 201) {
+                    sessionId.current = saved || data.session_id;
+                    if (!saved) {
+                        localStorage.setItem("chat_session_id", data.session_id);
+                    }
+
+                    setMessages(
+                        (data.history as HistoryItem[]).map((h) => ({
+                            sender: h.type === "human" ? "You" : "Bot",
+                            text: h.content,
+                        }))
+                    );
+                } else {
+                    console.error("Unexpected status from /history", res.status, data);
+                }
+            } catch (err) {
+                console.error("Failed to initialize chat history", err);
+            }
+        };
+
+        init();
     }, []);
 
-    // Function to handle sending a message to the backend server.
+    // send message
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -36,30 +97,36 @@ export function useChat() {
         const userMsg = input.trim();
         if (!userMsg) return;
 
-        // Adding user's message to the message list immediately.
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
         // Show typing indicator
         setisBotProcessing(true);
         try {
-
-            // Timeout/abort a fetch
+            if (USE_MOCKS) {
+                const data = mockBotResponse(userMsg);
+                setisBotProcessing(false);
+                setMessages((prev) => [...prev, { sender: "Bot", text: data.response }]);
+                return;
+            }
+            //real api call
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
+            const timeout = setTimeout(() => controller.abort(), 10000);
 
-            // Sending message to backend API via POST.
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ input: userMsg, session_id: sessionId.current }),
+                body: JSON.stringify({
+                    input: userMsg,
+                    session_id: sessionId.current,
+                }),
                 signal: controller.signal,
             });
             clearTimeout(timeout);
+
             const data = await res.json();
             // Hide typing indicator
             setisBotProcessing(false);
 
-            // Add bot's response
             setMessages((prev) => [
                 ...prev,
                 {
@@ -74,10 +141,7 @@ export function useChat() {
                 (err as Error).name === "AbortError"
                     ? "Request timed out. Please try again."
                     : "Network or server issue.";
-            setMessages((prev) => [
-                ...prev,
-                { sender: "Error", text: errorMsg },
-            ]);
+            setMessages((prev) => [...prev, { sender: "Error", text: errorMsg }]);
         }
     };
 
