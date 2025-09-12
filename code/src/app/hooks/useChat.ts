@@ -12,7 +12,32 @@ interface HistoryItem {
 
 // toggle mocks ON/OFF (true = use mock data, false = call API)
 const USE_MOCKS = false;
+const REQUEST_TIMEOUT = 20 * 1000; // 20 seconds
+// Session storage config
+const SESSION_KEY = "chat_session";
+const SESSION_TTL = 1000 * 60 * 30; // 30 minutes
 
+// load session with expiry
+function loadSession(): string {
+    try {
+        const stored = localStorage.getItem(SESSION_KEY);
+        if (stored) {
+            const { id, expiry } = JSON.parse(stored);
+            if (Date.now() < expiry) {
+                return id;
+            }
+        }
+    } catch (e) {
+        console.warn("Failed to parse stored session:", e);
+    }
+    // generate new if expired or not found
+    const newId = crypto.randomUUID();
+    localStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify({ id: newId, expiry: Date.now() + SESSION_TTL })
+    );
+    return newId;
+}
 export function useChat() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -54,19 +79,14 @@ export function useChat() {
                 }
 
                 //real api call
-                let saved = localStorage.getItem("chat_session_id");
-                if (!saved) {
-                    saved = crypto.randomUUID(); // frontend always generates UUID
-                    localStorage.setItem("chat_session_id", saved);
-                }
-                // Always call /history with a valid session_id
+                const saved = loadSession();
+                sessionId.current = saved;
+
                 const url = `${process.env.NEXT_PUBLIC_API_URL}/history?session_id=${saved}`;
                 const res = await fetch(url, { method: "GET" });
                 const data = await res.json();
 
                 if (res.status === 200 || res.status === 201) {
-                    sessionId.current = saved;
-
                     setMessages(
                         (data.history as HistoryItem[]).map((h) => ({
                             sender: h.type === "human" ? "You" : "Bot",
@@ -107,7 +127,7 @@ export function useChat() {
             }
             //real api call
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 10000);
+            const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                 method: "POST",
