@@ -10,8 +10,6 @@ interface HistoryItem {
     content: string;
 }
 
-// toggle mocks ON/OFF (true = use mock data, false = call API)
-const USE_MOCKS = false;
 const REQUEST_TIMEOUT = 20 * 1000; // 20 seconds
 // Session storage config
 const SESSION_KEY = "chat_session";
@@ -46,20 +44,6 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
-    // simple mock data
-    const mockHistory: { session_id: string; history: HistoryItem[] } = {
-        session_id: "mock-session-123",
-        history: [
-            { type: "ai", content: "👋 Hi, I'm your AI assistant. How can I help?" },
-            { type: "human", content: "What services do you provide?" },
-            { type: "ai", content: "We provide IT solutions, cloud setup, and more." },
-        ],
-    };
-
-    const mockBotResponse = (input: string) => ({
-        success: true,
-        response: `(mock) You said: "${input}"`,
-    });
 
     // initialize session & load history
     useEffect(() => {
@@ -67,17 +51,7 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
 
         const init = async () => {
             try {
-                if (USE_MOCKS) {
-                    sessionId.current = mockHistory.session_id;
-                    setMessages(
-                        mockHistory.history.map((h) => ({
-                            sender: h.type === "human" ? "You" : "Bot",
-                            text: h.content,
-                        }))
-                    );
-                    return;
-                }
-
+        
                 //real api call
                 const saved = loadSession();
                 sessionId.current = saved;
@@ -119,12 +93,6 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
         // Show typing indicator
         setisBotProcessing(true);
         try {
-            if (USE_MOCKS) {
-                const data = mockBotResponse(userMsg);
-                setisBotProcessing(false);
-                setMessages((prev) => [...prev, { sender: "Bot", text: data.response }]);
-                return;
-            }
             //real api call
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
