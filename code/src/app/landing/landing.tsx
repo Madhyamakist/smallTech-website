@@ -6,7 +6,7 @@ export default function Landing() {
     <div className="relative min-h-screen overflow-hidden">
       <Header />
 
-      <h1 className="absolute top-[15%] ">
+      <h1 className="absolute top-[15%] left-[5%] ">
         AI-First Tech Services
       </h1>
 
@@ -21,7 +21,7 @@ export default function Landing() {
         />
       </div>
 
-      <div className="absolute left-[0%] top-[60%] max-w-[35%]">
+      <div className="absolute left-[5%] top-[60%] max-w-[35%]">
         <h2 className="leading-tight">
           Integrate AI across your stack and into your existing workflows
         </h2>
