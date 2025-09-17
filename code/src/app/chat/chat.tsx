@@ -14,9 +14,9 @@ export default function Chat() {
   } = useChat();
 
   return (
-    <div className="flex flex-col px-2 py-6 relative min-h-screen">
-      <h2 className="mb-2 text-start">Meet Our AI Agent</h2>
-      <p className="mb-6 text-start">
+    <div className="flex flex-col px-2 relative min-h-screen" >
+      <h2 className="text-start">Meet Our AI Agent</h2>
+      <p className="text-start">
         Talk to our smart assistant to explore services
       </p>
 
@@ -25,7 +25,7 @@ export default function Chat() {
         className="flex flex-col overflow-y-auto space-y-3 "
         style={{
           flexGrow: 1,
-          maxHeight: "calc(100vh - 220px)",
+          maxHeight: "calc(110vh - 200px)",
         }}
 
       >
@@ -53,7 +53,7 @@ export default function Chat() {
       {isClient && (
         <form
           onSubmit={sendMessage}
-          className="mt-[10%]"
+          className="mt-1"
         >
           <div className="flex items-center bg-rose rounded-xl border border-black px-3 py-2 shadow-md">
             <input
