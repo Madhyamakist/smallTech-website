@@ -5,7 +5,38 @@ export interface Message {
     text: string;
 }
 
-export function useChat() {
+interface HistoryItem {
+    type: "human" | "ai";
+    content: string;
+}
+
+const REQUEST_TIMEOUT = 20 * 1000; // 20 seconds
+// Session storage config
+const SESSION_KEY = "chat_session";
+const SESSION_TTL = 1000 * 60 * 30; // 30 minutes
+
+// load session with expiry
+function loadSession(): string {
+    try {
+        const stored = localStorage.getItem(SESSION_KEY);
+        if (stored) {
+            const { id, expiry } = JSON.parse(stored);
+            if (Date.now() < expiry) {
+                return id;
+            }
+        }
+    } catch (e) {
+        console.warn("Failed to parse stored session:", e);
+    }
+    // generate new if expired or not found
+    const newId = crypto.randomUUID();
+    localStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify({ id: newId, expiry: Date.now() + SESSION_TTL })
+    );
+    return newId;
+}
+export function useChat(requestType: "generic" | "sales" = "generic") {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
@@ -13,20 +44,41 @@ export function useChat() {
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
-    // useEffect to set the client flag true after mount.
+
+    // initialize session & load history
     useEffect(() => {
         setIsClient(true);
-        sessionId.current = crypto.randomUUID();
-        // Initial bot welcome
-        setMessages([
-            {
-                sender: "Bot",
-                text: "Hi, Welcome to smallTech 👋. I'm here to help with any IT-related questions or concerns you might bring. What brings you to our website today?",
-            },
-        ]);
+
+        const init = async () => {
+            try {
+        
+                //real api call
+                const saved = loadSession();
+                sessionId.current = saved;
+
+                const url = `${process.env.NEXT_PUBLIC_API_URL}/history?session_id=${saved}`;
+                const res = await fetch(url, { method: "GET" });
+                const data = await res.json();
+
+                if (res.status === 200 || res.status === 201) {
+                    setMessages(
+                        (data.history as HistoryItem[]).map((h) => ({
+                            sender: h.type === "human" ? "You" : "Bot",
+                            text: h.content,
+                        }))
+                    );
+                } else {
+                    console.error("Unexpected status from /history", res.status, data);
+                }
+            } catch (err) {
+                console.error("Failed to initialize chat history", err);
+            }
+        };
+
+        init();
     }, []);
 
-    // Function to handle sending a message to the backend server.
+    // send message
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -36,30 +88,31 @@ export function useChat() {
         const userMsg = input.trim();
         if (!userMsg) return;
 
-        // Adding user's message to the message list immediately.
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
         // Show typing indicator
         setisBotProcessing(true);
         try {
-
-            // Timeout/abort a fetch
+            //real api call
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
+            const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
-            // Sending message to backend API via POST.
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ input: userMsg, session_id: sessionId.current }),
+                body: JSON.stringify({
+                    input: userMsg,
+                    session_id: sessionId.current,
+                    request_type: requestType || "generic",
+                }),
                 signal: controller.signal,
             });
             clearTimeout(timeout);
+
             const data = await res.json();
             // Hide typing indicator
             setisBotProcessing(false);
 
-            // Add bot's response
             setMessages((prev) => [
                 ...prev,
                 {
@@ -74,10 +127,7 @@ export function useChat() {
                 (err as Error).name === "AbortError"
                     ? "Request timed out. Please try again."
                     : "Network or server issue.";
-            setMessages((prev) => [
-                ...prev,
-                { sender: "Error", text: errorMsg },
-            ]);
+            setMessages((prev) => [...prev, { sender: "Error", text: errorMsg }]);
         }
     };
 
