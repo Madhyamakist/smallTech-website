@@ -27,7 +27,7 @@ export default function Landing() {
         className="relative flex items-center group"
       >
         <Image
-          src="/credits.png"
+          src="/info.png"
           width={16}
           height={16}
           alt="credits"
@@ -60,7 +60,7 @@ export default function Landing() {
         className="relative flex items-center group"
       >
         <Image
-          src="/credits.png"
+          src="/info.png"
           width={16}
           height={16}
           alt="credits"
