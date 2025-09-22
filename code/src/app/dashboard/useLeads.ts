@@ -15,7 +15,7 @@ interface LeadRowData {
 }
 
 // toggle mock vs API
-const use_mockData = true;
+const use_mockData = false;
 
 
 const MOCK_LEADS: LeadRowData[] = [
@@ -77,12 +77,11 @@ const MOCK_LEADS: LeadRowData[] = [
 
 // --- API calls ---
 async function fetchLeadsFromAPI(): Promise<LeadRowData[]> {
-  const res = await fetch('/leads', { cache: 'no-store' });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leads`, { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch from API');
   const data = await res.json();
-  const rows = (data?.chat_info ?? []) as LeadRowData[];
-  return rows.map((r) => ({ ...r, 
-    status: r.status || 'OPEN' }));
+  const rows = (data?.leads ?? []) as LeadRowData[];
+  return rows.map((r) => ({ ...r, status: r.status || 'OPEN' }));
 }
 async function patchLeadAPI(
     update: Partial<Pick<LeadRowData, 'status' | 'remarks'>> & { session_id: string }
