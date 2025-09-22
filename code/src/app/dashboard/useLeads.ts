@@ -14,6 +14,16 @@ export interface LeadRowData {
   remarks?: string;
 }
 
+export interface Message {
+  sender: string;
+  text: string;
+}
+
+interface HistoryItem {
+  type: 'human' | 'ai';
+  content: string;
+}
+
 async function patchLeadAPI(
   update: Partial<Pick<LeadRowData, 'status' | 'remarks'>> & { session_id: string }
 ) {
@@ -34,6 +44,9 @@ export function useLeads(initial: LeadRowData[] = []) {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [histories, setHistories] = useState<Record<string, Message[]>>({});
+  const [historyLoading, setHistoryLoading] = useState<Record<string, boolean>>({});
+  const [historyError, setHistoryError] = useState<Record<string, string | undefined>>({});
 
   const patchLead = async (
     update: Partial<Pick<LeadRowData, 'status' | 'remarks'>> & { session_id: string }
@@ -67,6 +80,31 @@ export function useLeads(initial: LeadRowData[] = []) {
     }
   }, []);
 
+  const loadHistory = useCallback(async (session_id: string) => {
+    if (historyLoading[session_id]) return;
+    setHistoryLoading((m) => ({ ...m, [session_id]: true }));
+    setHistoryError((m) => ({ ...m, [session_id]: undefined }));
+    try {
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/history?session_id=${encodeURIComponent(session_id)}`;
+      const res = await fetch(url, { method: 'GET' });
+      const data = await res.json();
+      if (res.ok) {
+        const msgs: Message[] = (data.history as HistoryItem[] | undefined)?.map((h) => ({
+          sender: h.type === 'human' ? 'You' : 'Bot',
+          text: h.content,
+        })) || [];
+        setHistories((m) => ({ ...m, [session_id]: msgs }));
+      } else {
+        const err = (data && (data.error || data.message)) || 'Failed to load history';
+        setHistoryError((m) => ({ ...m, [session_id]: String(err) }));
+      }
+    } catch (e) {
+      setHistoryError((m) => ({ ...m, [session_id]: (e as Error).message }));
+    } finally {
+      setHistoryLoading((m) => ({ ...m, [session_id]: false }));
+    }
+  }, [historyLoading]);
+
   return {
     rows,
     error,
@@ -75,5 +113,9 @@ export function useLeads(initial: LeadRowData[] = []) {
     setExpanded,
     onChangeStatus,
     onSaveRemarks,
+    histories,
+    historyLoading,
+    historyError,
+    loadHistory,
   };
 }
