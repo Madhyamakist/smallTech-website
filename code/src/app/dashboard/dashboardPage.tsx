@@ -11,6 +11,8 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 
+const PAGE_SIZE = 6;
+
 const statusColors: Record<LeadStatus, string> = {
     OPEN: "text-blue-700 font-semibold",
     CLOSED: "text-red-600 font-semibold",
@@ -32,7 +34,6 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
         loadHistory,
     } = useLeads(initialRows);
     const [currentPage, setCurrentPage] = useState(1);
-    const PAGE_SIZE = 6;
     const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const pagedRows = rows.slice(startIndex, startIndex + PAGE_SIZE);
@@ -349,7 +350,7 @@ function RowRemarks({
     const [value, setValue] = useState(initialRemarks);
     const [isEditing, setIsEditing] = useState(false);
     useEffect(() => setValue(initialRemarks), [initialRemarks]);
-
+    
     return (
         <div className="flex items-start gap-2">
             {isEditing ? (
@@ -358,7 +359,7 @@ function RowRemarks({
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Add remarks"
-                    rows={3}
+                    rows={PAGE_SIZE}
                 />
             ) : (
                 <div className="w-full min-h-[2.5rem] px-3 py-2 rounded-lg bg-[var(--color-khaki)] text-black whitespace-pre-wrap">
