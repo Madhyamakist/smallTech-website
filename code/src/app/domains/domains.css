@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .card {
-  @apply p-3 bg-rose/40 text-licorice rounded-xl flex flex-col items-center justify-center my-2 ;
+  @apply p-3 bg-rose/40 text-licorice rounded-xl flex flex-col items-center justify-center my-2 mx-4;
 }
 
 .title {
