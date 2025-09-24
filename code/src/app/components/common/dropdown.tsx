@@ -5,18 +5,33 @@ import { DropdownOption } from '@/app/models/dropdownOption';
 
 interface DropdownProps<T> {
   label: string;
-  fetchOptions: () => Promise<DropdownOption<T>[]>;
+  options?: DropdownOption<T>[];
+  fetchOptions?: () => Promise<DropdownOption<T>[]>;
   onSelect: (value: T) => void;
 }
 
-export default function Dropdown<T>({ label, fetchOptions, onSelect }: DropdownProps<T>) {
-  const [options, setOptions] = useState<DropdownOption<T>[]>([]);
+export default function Dropdown<T>({ label, options, fetchOptions, onSelect }: DropdownProps<T>) {
+  const [internalOptions, setInternalOptions] = useState<DropdownOption<T>[]>(options ?? []);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState(label);
 
   useEffect(() => {
-    fetchOptions().then(setOptions).catch(console.error);
-  }, [fetchOptions]);
+    setSelectedLabel(label);
+  }, [label]);
+
+  useEffect(() => {
+    if (options && options.length) {
+      setInternalOptions(options);
+      return;
+    }
+    if (fetchOptions) {
+      let alive = true;
+      fetchOptions().then((opts) => {
+        if (alive) setInternalOptions(opts);
+      }).catch(console.error);
+      return () => { alive = false; };
+    }
+  }, [options, fetchOptions]);
 
   const handleSelect = (option: DropdownOption<T>) => {
     setSelectedLabel(option.label);
@@ -31,7 +46,7 @@ export default function Dropdown<T>({ label, fetchOptions, onSelect }: DropdownP
       </button>
       {isOpen && (
         <ul className="txt">
-          {options.map((opt, idx) => (
+          {internalOptions.map((opt, idx) => (
             <li
               key={idx}
               className="listItem"
