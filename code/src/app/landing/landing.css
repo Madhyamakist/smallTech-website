@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* tooltip wrapper */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* tooltip content */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  padding: 4px 6px;
+  border-radius: 4px;
+
+  /* position */
+  position: absolute;
+  bottom: 125%; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+
+  /* animation */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%; 
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+/* show tooltip on hover OR focus (mobile-friendly) */
+.tooltip:hover .tooltiptext,
+.tooltip:focus .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

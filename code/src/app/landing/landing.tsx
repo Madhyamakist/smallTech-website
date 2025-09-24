@@ -19,27 +19,31 @@ export default function Landing() {
           alt="globe"
           className="animate-spin [animation-duration:20s] [animation-timing-function:linear] [animation-iteration-count:infinite]"
         />
-         <div className="absolute right-[30%] text-white text-[10px]">
-      <a
-        href="https://www.freepik.com/author/hannazasimova"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative flex items-center group"
-      >
-        <Image
-          src="/info.png"
-          width={16}
-          height={16}
-          alt="credits"
-          className="cursor-pointer"
-        />
+        <div className="absolute right-[30%] text-white text-[10px]">
+          <div className="tooltip">
+            <Image
+              src="/info.png"
+              width={16}
+              height={16}
+              alt="credits"
+              className="cursor-pointer"
+              tabIndex={0} // allows :focus on mobile
+            />
 
-        {/* Tooltip */}
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block text-white text-[5px]">
-         hannazasimova
-        </span>
-      </a>
-    </div>
+            {/* Tooltip */}
+            <span className="tooltiptext">
+              <a
+                href="https://www.freepik.com/author/hannazasimova"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                hannazasimova
+              </a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
       <div className="absolute left-[5%] top-[60%] max-w-[35%]">
@@ -53,26 +57,31 @@ export default function Landing() {
         </h2>
       </div>
       <div className="absolute bottom-[0%] right-[0%] text-white text-[10px]">
-      <a
-        href="https://dribbble.com/abron"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative flex items-center group"
-      >
-        <Image
-          src="/info.png"
-          width={16}
-          height={16}
-          alt="credits"
-          className="cursor-pointer"
-        />
+        <div className="tooltip">
 
-        {/* Tooltip */}
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block  text-white text-[5px] ">
-         Abron Studio
-        </span>
-      </a>
-    </div>
+          <Image
+            src="/info.png"
+            width={16}
+            height={16}
+            alt="credits"
+            className="cursor-pointer"
+            tabIndex={0}
+          />
+
+          {/* Tooltip */}
+          <span className="tooltiptext ">
+            <a
+              href="https://dribbble.com/abron"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Abron Studio
+
+            </a>
+          </span>
+        </div>
+      </div>
     </div>
 
   );

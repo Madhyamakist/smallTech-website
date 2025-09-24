@@ -5,6 +5,7 @@
 @import './components/common/dropdown.css';
 @import './components/common/card.css';
 @import './domains//domains.css';
+@import './landing/landing.css';
 
 @theme inline {
   --color-cream: #c4bbaf;
