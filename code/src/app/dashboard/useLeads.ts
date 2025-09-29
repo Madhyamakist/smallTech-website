@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type LeadStatus = 'OPEN' | 'CLOSED' | 'QUALIFYING';
 
@@ -41,6 +41,10 @@ async function patchLeadAPI(
 
 export function useLeads(initial: LeadRowData[] = []) {
   const [rows, setRows] = useState<LeadRowData[]>(initial);
+  // keep rows in sync when initial changes (e.g., after parent fetch completes)
+  useEffect(() => {
+    setRows(initial || []);
+  }, [initial]);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});

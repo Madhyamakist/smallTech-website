@@ -14,7 +14,12 @@ export default function Page() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leads`);
         if (!res.ok) return;
         const data = await res.json();
-        if (!cancelled) setRows((data?.leads ?? []) as LeadRowData[]);
+        if (!cancelled) {
+          const rowsData = Array.isArray(data)
+            ? (data as LeadRowData[])
+            : ((data?.leads ?? []) as LeadRowData[]);
+          setRows(rowsData);
+        }
       } catch {
         // ignore in static export; UI starts empty
       }
