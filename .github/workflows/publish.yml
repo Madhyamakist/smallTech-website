@@ -54,6 +54,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./code/out
+          cname: smalltech.in
           keep_files: true
 
   # Staging build+deploy to /staging for any dev* branch
