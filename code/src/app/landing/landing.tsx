@@ -7,7 +7,7 @@ export default function Landing() {
       <Header />
 
       <h1 className="absolute top-[15%] left-[5%] ">
-        AI-First Tech Services
+        AI-First Tech Services(test)
       </h1>
 
       {/* <div className="absolute top-[10%] right-0 translate-x-1/3 translate-y-1/5 "> */}
