@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+header {
+  @apply bg-caput
+    w-full 
+    flex justify-start
+    items-end
+    gap-4
+}

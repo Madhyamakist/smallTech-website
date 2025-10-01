@@ -18,6 +18,7 @@ jobs:
 
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_BASE_PATH: ${{ secrets.NEXT_PUBLIC_BASE_PATH }}
 
     steps:
       - name: Checkout 🛎️
@@ -28,6 +29,14 @@ jobs:
         uses: ./.github/workflows/setup-node
 
 
+      - name: Install deps (code)
+        run: npm ci
+        working-directory: ./code
+
+      - name: Install deps (staging)
+        run: npm ci
+        working-directory: ./staging
+
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v4
         with:
@@ -35,9 +44,17 @@ jobs:
 
 
       - name: Build with Next.js 🏗️
-        run: npx next build
+        run: npm run build
         working-directory: ./code
 
+      - name: Build staging
+        run: npm run build
+        working-directory: ./staging
+
+      - name: Copy staging build
+        run: |
+          mkdir -p ./code/out/staging
+          cp -r ./staging/out/* ./code/out/staging/
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3

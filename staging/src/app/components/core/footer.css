@@ -1,0 +1,9 @@
+@import "tailwindcss";
+ 
+ footer {
+    @apply 
+    text-center
+    text-sm 
+    m-4
+    font-light;
+  }
