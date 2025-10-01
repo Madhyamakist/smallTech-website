@@ -13,11 +13,11 @@ export default function Footer() {
             <span className="text-white ">blog.smallTech.in</span>
           </Link>
           <Link
-            href="mailto:contact@madhyamakist.com"
+            href="mailto:contact@smalltech.in"
             className="flex items-center hover:underline space-x-2"
           >
             <Image src="./email.png" width={15} height={15} alt="email" />
-            <span className="text-white">contact@madhyamakist.com</span>
+            <span className="text-white">contact@smalltech.in</span>
           </Link>
           
           <div className="flex items-center space-x-2">
