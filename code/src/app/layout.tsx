@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import NetworkStatusBanner from "./components/common/networkStatus";
-import Script from "next/script";
+// import Script from "next/script";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Google Analytics */}
-        <Script
+        {/* <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-YTYS0G2P7L"
           strategy="afterInteractive"
         />
@@ -34,9 +34,9 @@ export default function RootLayout({
             gtag('js', new Date());
             gtag('config', 'G-YTYS0G2P7L');
           `}
-        </Script>
+        </Script> */}
         {/* Google Ads Conversion Tracking */}
-        <Script
+        {/* <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17476588629"
           strategy="afterInteractive"
         />
@@ -47,7 +47,7 @@ export default function RootLayout({
             gtag('js', new Date());
             gtag('config', 'AW-17476588629'); 
           `}
-        </Script>
+        </Script> */}
       </head>
       <body
         className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}
