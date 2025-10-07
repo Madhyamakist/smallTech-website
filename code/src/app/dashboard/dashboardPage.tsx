@@ -11,7 +11,8 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 
-const PAGE_SIZE = 6;
+// Pagination 
+const PAGE_SIZE = 50;
 
 const statusColors: Record<LeadStatus, string> = {
     OPEN: "text-blue-700 font-semibold",
