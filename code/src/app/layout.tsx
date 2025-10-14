@@ -11,7 +11,21 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "SmallTech",
-  description: "A frontend boilerplate",
+  description: "Tailored tech solutions for your business.",
+  openGraph: {
+    title: 'SmallTech',
+    description: 'Tailored tech solutions for your business.',
+    url: 'https://smalltech.in',
+    siteName: 'SmallTech',
+    images: [
+      {
+        url: 'https://smalltech.in/logo.png',
+        alt: 'SmallTech Logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
