@@ -36,7 +36,7 @@ function loadSession(): string {
     );
     return newId;
 }
-export function useChat(requestType: "generic" | "sales" = "generic") {
+export function useChat( ) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
@@ -121,7 +121,7 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
                 body: JSON.stringify({
                     input: userMsg,
                     session_id: sessionId.current,
-                    request_type: requestType || "generic",
+                    request_type: "sales",
                 }),
                 signal: controller.signal,
             });
