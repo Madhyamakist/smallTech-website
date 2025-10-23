@@ -1,6 +1,7 @@
 "use client";
 import Footer from "../components/core/footer";
 import { useChat } from "../hooks/useChat";
+import { marked } from "marked"; 
 
 export default function Chat() {
   const {
@@ -38,7 +39,14 @@ export default function Chat() {
               : "bg-cinereous self-start text-brown font-semibold"
               }`}
           >
-            {msg.text}
+            {msg.sender === "You" ? (
+              msg.text
+            ) : (
+              <div
+                className="text-sm text-brown font-semibold"
+                dangerouslySetInnerHTML={{ __html: marked.parse(msg.text) }}
+              />
+            )}
           </div>
         ))}
         {/* Typing Indicator */}
