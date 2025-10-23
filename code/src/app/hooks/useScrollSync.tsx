@@ -41,6 +41,14 @@ export function useScrollSync() {
             const desiredUrl = window.location.pathname + window.location.search + newHash;
             if (currentUrl !== desiredUrl) {
               window.history.replaceState(null, '', desiredUrl);
+              //  Send GA page view when new section becomes visible
+              if (typeof window !== 'undefined' && typeof (window).gtag === 'function') {
+                (window).gtag('event', 'page_view', {
+                  page_path: `/${id}`,
+                  page_title: id,
+                });
+              }
+
             }
           }
         }
