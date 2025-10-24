@@ -36,7 +36,7 @@ function loadSession(): string {
     );
     return newId;
 }
-export function useChat(requestType: "generic" | "sales" = "generic") {
+export function useChat( ) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
@@ -51,7 +51,7 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
 
         const init = async () => {
             try {
-        
+
                 //real api call
                 const saved = loadSession();
                 sessionId.current = saved;
@@ -83,10 +83,28 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
         e.preventDefault();
 
         // Prevent sending if already waiting for a response
-  if (isBotProcessing) return;
-  
+        if (isBotProcessing) return;
+
         const userMsg = input.trim();
         if (!userMsg) return;
+
+
+        // Track first chatbot message (only once per session)
+        const hasTracked = localStorage.getItem(`chat_first_sent_${sessionId.current}`);
+        if (!hasTracked) {
+            try {
+                if (typeof window !== "undefined" && "gtag" in window) {
+                    (window).gtag("event", "chatbot_first_interaction", {
+                        session_id: sessionId.current,
+                        page_path: window.location.pathname,
+                    });
+                }
+                localStorage.setItem(`chat_first_sent_${sessionId.current}`, "true");
+            } catch (err) {
+                console.warn("Failed to send GA event", err);
+            }
+        }
+
 
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
@@ -103,7 +121,7 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
                 body: JSON.stringify({
                     input: userMsg,
                     session_id: sessionId.current,
-                    request_type: requestType || "generic",
+                    request_type: "sales",
                 }),
                 signal: controller.signal,
             });
@@ -136,7 +154,7 @@ export function useChat(requestType: "generic" | "sales" = "generic") {
         if (chatBoxText.current) {
             chatBoxText.current.scrollTop = chatBoxText.current.scrollHeight;
         }
-    }, [messages,isBotProcessing]);
+    }, [messages, isBotProcessing]);
 
     return {
         chatBoxText,
