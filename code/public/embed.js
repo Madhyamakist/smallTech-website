@@ -1,13 +1,12 @@
 (function() {
   const chatUrl = document.currentScript.getAttribute("data-chat-url") || "https://smalltech.in/embed";
 
-  const isMobile = window.matchMedia("(max-width: 600px)").matches;
   // Create iframe container
   const iframeWrapper = document.createElement("div");
   iframeWrapper.style.position = "fixed";
   iframeWrapper.style.bottom = "20px";
   iframeWrapper.style.right = "20px";
-  iframeWrapper.style.width = "380px";
+  iframeWrapper.style.width = "300px";
   iframeWrapper.style.height = "520px";
   iframeWrapper.style.borderRadius = "16px";
   iframeWrapper.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
