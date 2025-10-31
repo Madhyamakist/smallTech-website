@@ -3,8 +3,8 @@
 
   // Create iframe container
   const iframeWrapper = document.createElement("div");
-  iframeWrapper.style.position = "fixed";
-  iframeWrapper.style.bottom = "20px";
+  iframeWrapper.style.position = "absolute";
+  iframeWrapper.style.bottom = "0px";
   iframeWrapper.style.right = "20px";
   iframeWrapper.style.width = "300px";
   iframeWrapper.style.height = "520px";
@@ -15,12 +15,6 @@
   iframeWrapper.style.display = "none";
   iframeWrapper.style.overflow = "hidden";
   iframeWrapper.style.background = "white";
-  // if(isMobile){
-  //   iframeWrapper.style.bottom = "0";
-  //   iframeWrapper.style.right = "0";
-  //   iframeWrapper.style.top = "0"; // Added top: 0
-  //   iframeWrapper.style.left = "0";
-  // }
 
   // iframe inside wrapper
   const iframe = document.createElement("iframe");
@@ -54,8 +48,8 @@
   // Floating chat bubble
   const bubble = document.createElement("div");
   bubble.innerHTML = "💬";
-  bubble.style.position = "fixed";
-  bubble.style.bottom = "20px";
+  bubble.style.position = "absolute";
+  bubble.style.bottom = "0px";
   bubble.style.right = "20px";
   bubble.style.width = "60px";
   bubble.style.height = "60px";
