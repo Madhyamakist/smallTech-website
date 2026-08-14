@@ -19,7 +19,7 @@ export const hero = {
     "We are a collective of engineers, designers and thinkers who believe that AI can be and should be used for good. " +
     "We do not only build and scale agentic software " +
     "but we also aim to do so equitably and sustainably.",
-  pills: ["AI Training", "AI Consulting", "Applied AI"],
+  pills: ["Applied AI", "AI Consulting", "AI Training"],
 };
 
 export const stats: { value: string; label: string }[] = [

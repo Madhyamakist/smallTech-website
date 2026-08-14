@@ -10,7 +10,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "smallTech | AI Training & AI Agents for Business",
+  title: "smallTech | Applied AI Consulting & Training",
   description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
   keywords: ["AI training", "agentic AI training", "corporate AI training India", "AI training for executives", "multi-agent systems", "AI agents for small business", "Claude Code training", "enterprise AI transformation", "AI adoption roadmap", "Zer0", "smallTech"],
   robots: "index, follow",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "smallTech | AI Training & AI Agents for Business",
+    title: "smallTech | Applied AI Consulting & Training",
     description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
     url: "https://smalltech.in",
     siteName: "SmallTech",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "smallTech | AI Training & AI Agents for Business",
+    title: "smallTech | Applied AI Consulting & Training",
     description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
     images: ["https://smalltech.in/logo.png"],
   },
