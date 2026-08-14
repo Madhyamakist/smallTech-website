@@ -10,9 +10,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "SmallTech | AI Solutions for Enterprises",
-  description: "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
-  keywords: ["AI solutions", "enterprise AI", "agentic AI", "AI integration", "web development", "app development", "cloud architecture", "tech solutions", "SmallTech"],
+  title: "smallTech | AI Training & AI Agents for Business",
+  description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
+  keywords: ["AI training", "agentic AI training", "corporate AI training India", "AI training for executives", "multi-agent systems", "AI agents for small business", "Claude Code training", "enterprise AI transformation", "AI adoption roadmap", "Zer0", "smallTech"],
   robots: "index, follow",
   alternates: {
     canonical: "https://smalltech.in",
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "SmallTech | AI Solutions for Enterprises",
-    description: "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
+    title: "smallTech | AI Training & AI Agents for Business",
+    description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
     url: "https://smalltech.in",
     siteName: "SmallTech",
     images: [
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SmallTech | AI Solutions for Enterprises",
-    description: "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
+    title: "smallTech | AI Training & AI Agents for Business",
+    description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
     images: ["https://smalltech.in/logo.png"],
   },
 };
@@ -51,7 +51,7 @@ const jsonLd = {
   "name": "SmallTech",
   "url": "https://smalltech.in",
   "logo": "https://smalltech.in/logo.png",
-  "description": "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
+  "description": "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
   "sameAs": ["https://github.com/smallTechOrg"],
 };
 
