@@ -1,30 +1,19 @@
 import type { Metadata } from "next";
-import ScrollLayout from "../components/scrollLayout";
+import LandingPro from "../components/landingPro";
 
+/*
+ * Legacy route retained so existing inbound links and search results keep
+ * resolving. The site is now a single page, so this serves the same content and
+ * canonicalises to the root URL rather than competing with it.
+ */
 export const metadata: Metadata = {
-  title: "Domains | SmallTech — Industry Expertise Across Tech Verticals",
-  description: "SmallTech delivers across app dev, web dev, AI, cloud, security, e-commerce, healthcare, logistics, and marketplace platforms. See our industry domain expertise.",
+  title: "smallTech | Applied AI Consulting & Training",
+  description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
   alternates: {
-    canonical: "https://smalltech.in/domains",
-  },
-  openGraph: {
-    title: "Domains | SmallTech — Industry Expertise Across Tech Verticals",
-    description: "SmallTech delivers across app dev, web dev, AI, cloud, security, e-commerce, healthcare, logistics, and marketplace platforms. See our industry domain expertise.",
-    url: "https://smalltech.in/domains",
-    siteName: "SmallTech",
-    images: [
-      {
-        url: "https://smalltech.in/logo.png",
-        alt: "SmallTech Logo",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
+    canonical: "https://smalltech.in",
   },
 };
 
 export default function DomainsPage() {
-  return <ScrollLayout />;
+  return <LandingPro />;
 }

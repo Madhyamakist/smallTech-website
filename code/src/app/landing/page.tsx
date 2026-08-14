@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import LandingPro from "../components/landingPro";
 
 export const metadata: Metadata = {
-  title: "SmallTech | AI Solutions for Enterprises",
-  description: "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
+  title: "smallTech | Applied AI Consulting & Training",
+  description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
   alternates: {
     canonical: "https://smalltech.in",
   },
   openGraph: {
-    title: "SmallTech | AI Solutions for Enterprises",
-    description: "SmallTech builds tailored software solutions — AI integration, web & app development, cloud architecture, and continuous delivery for businesses of all sizes.",
+    title: "smallTech | Applied AI Consulting & Training",
+    description: "smallTech is an AI-native studio: practitioner-led agentic AI training for enterprise and government leadership, and the Zer0 agent suite for small businesses. 700+ professionals trained.",
     url: "https://smalltech.in",
     siteName: "SmallTech",
     images: [

@@ -1,52 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, type ReactNode } from "react";
 import Image from "next/image";
-import { Button } from "./common/button";
 import { techItems } from "../offerings/icons";
-import { techDomains, businessDomains } from "../domains/constants";
-import { trainingTracks, readingList } from "../training/constants";
+import {
+  hero,
+  stats,
+  services,
+  ethos,
+  programmes,
+  journey,
+  facilitators,
+  deliveryModel,
+  products,
+  type Product,
+} from "../landing/content";
 import EmbedScript from "./embedScript";
 
 /* normalise "./foo.png" | "foo.png" -> "/foo.png" */
 const asset = (s: string) => "/" + s.replace(/^\.?\//, "");
 
-const products = [
-  {
-    image: "/local.png",
-    title: "#local",
-    role: "Location-Based Community Platform",
-    tag: "Flagship · Civic Tech",
-    description:
-      "The fastest way to report potholes, illegal dumping, broken lights and other civic issues directly to your local government.",
-    cta: "Download",
-    url: "https://local.smalltech.in",
-  },
-  {
-    image: "/robot.svg",
-    title: "Zer0",
-    role: "AI Agents for Small Businesses",
-    tag: "AI Agents",
-    description:
-      "Embeddable smart agent for your website. Automate customer support, lead generation, and sales with AI.",
-    cta: "Visit Site",
-    url: "https://zero.smalltech.in",
-  },
-  {
-    image: "/ai.png",
-    title: "zero-shot SDD",
-    role: "Claude Code Native Coding Agent Harness",
-    tag: "Open Source · Dev Tools",
-    description:
-      "An open-source spec-driven-development harness for Claude Code — orchestrating autonomous coding agents for zero-shot software delivery.",
-    cta: "View on GitHub",
-    url: "https://github.com/smallTechOrg/zero-shot-sdd-harness",
-  },
-];
-
 const clients = [
-  { name: "Baamboojah", logo: "/baamboojah-logo.svg", url: "https://baamboojah.com", w: 90, h: 90 },
   { name: "UP Police", logo: "/up police.png", url: "https://www.linkedin.com/posts/madhyamakist_what-does-real-sovereign-ai-mean-for-india-ugcPost-7462018105133940736-wDwl", w: 90, h: 90 },
+  { name: "MeitY", logo: "/meity.png", url: "", w: 190, h: 62 },
+  { name: "Baamboojah", logo: "/baamboojah-logo.svg", url: "https://baamboojah.com", w: 90, h: 90 },
   { name: "Canvs", logo: "/canvs.svg", url: "", w: 180, h: 43 },
   { name: "Swiggy", logo: "/swiggy.png", url: "", w: 90, h: 90 },
   { name: "MediBuddy", logo: "/medibuddy.png", url: "", w: 90, h: 90 },
@@ -60,7 +37,8 @@ const clients = [
   { name: "Parksons", logo: "/Parksons-logo-1.png", url: "", w: 200, h: 46 },
 ];
 
-const open = (url: string) => url && window.open(url, "_blank");
+const mailto = (subject: string) =>
+  `mailto:contact@smalltech.in?subject=${encodeURIComponent(subject)}`;
 
 /* Open Zero chat widget if present, else fall back to email */
 const openChat = () => {
@@ -74,7 +52,8 @@ const openChat = () => {
 };
 
 const NAV: { label: string; href?: string; chat?: boolean }[] = [
-  { label: "Work", href: "#work" },
+  { label: "What we do", href: "#services" },
+  { label: "Portfolio", href: "#products" },
   { label: "AI Training", href: "#training" },
   { label: "Contact", chat: true },
 ];
@@ -93,6 +72,7 @@ export default function LandingPro() {
     <div className="min-h-screen">
       {/* Zero chat agent widget */}
       <EmbedScript />
+
       {/* ===== HEADER ===== */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -120,23 +100,23 @@ export default function LandingPro() {
               }`}
             />
             <span className="flex flex-col leading-none">
-              <span className="text-[24px] md:text-[26px] font-[700] text-deep-mocha leading-none tracking-[-0.01em]">
+              <span className="text-[24px] md:text-[26px] font-[800] text-deep-mocha leading-none tracking-[-0.01em]">
                 smallTech
               </span>
-              <span className="text-[11px] md:text-[12px] font-[300] text-redwood leading-none tracking-[0.18em] uppercase mt-1">
+              <span className="text-[11px] md:text-[12px] font-[400] text-redwood leading-none tracking-[0.18em] uppercase mt-1">
                 replicable success
               </span>
             </span>
           </a>
 
-          {/* Desktop nav — pushed hard right, guaranteed no overlap */}
-          <nav className="hidden md:flex items-center gap-10 ml-auto pl-12">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-9 ml-auto pl-12">
             {NAV.map((item) =>
               item.chat ? (
                 <button
                   key={item.label}
                   onClick={openChat}
-                  className="relative text-[15px] font-[400] text-liver-brown hover:text-expresso transition-colors cursor-pointer
+                  className="relative text-[15px] font-[500] text-liver-brown hover:text-expresso transition-colors cursor-pointer
                     after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-[1.5px] after:rounded-full after:bg-redwood
                     after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                 >
@@ -146,7 +126,7 @@ export default function LandingPro() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="relative text-[15px] font-[400] text-liver-brown hover:text-expresso transition-colors
+                  className="relative text-[15px] font-[500] text-liver-brown hover:text-expresso transition-colors
                     after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-[1.5px] after:rounded-full after:bg-redwood
                     after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                 >
@@ -160,115 +140,124 @@ export default function LandingPro() {
 
       <div className="max-w-[1200px] mx-auto px-[4%]">
         {/* ===== HERO ===== */}
-        <section id="home" className="grid md:grid-cols-2 gap-8 items-center pt-12 md:pt-16 pb-16">
+        <section id="home" className="grid md:grid-cols-2 gap-8 items-center pt-12 md:pt-16 pb-10">
           <div className="flex flex-col">
-            <h1 className="text-[40px] sm:text-[52px] md:text-[58px] font-[600] leading-[1.05] text-deep-mocha mb-5">
-              Changing how the world{" "}
+            <p className="text-redwood text-[12px] font-[700] tracking-[3px] uppercase mb-4">
+              {hero.eyebrow}
+            </p>
+            <h1 className="text-[40px] sm:text-[52px] md:text-[58px] font-[700] leading-[1.05] text-deep-mocha mb-5">
+              {hero.titleLead}{" "}
               <span className="bg-[linear-gradient(90deg,#8D5B4C,#B8887A)] bg-clip-text text-transparent">
-                works.
+                {hero.titleAccent}
               </span>
             </h1>
-            <p className="text-[17px] md:text-lg font-[300] text-liver-brown max-w-xl mb-8">
-              We are a collective of software developers, designers and thinkers building tools
-              and platforms that empower individuals and communities — striking balance between
-              production and consumption for a more equitable, sustainable future.
+            <p className="text-[17px] md:text-lg font-[400] text-liver-brown max-w-xl mb-8">
+              {hero.body}
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
-              <button
-                onClick={() => open("mailto:contact@smalltech.in?subject=AI%20Training")}
-                className="rounded-full bg-expresso text-seashell-pink text-[15px] font-[500] px-6 py-3 shadow-[0_3px_8px_0_rgba(0,0,0,0.25)] hover:opacity-90 transition cursor-pointer"
+              <a
+                href="#training"
+                className="rounded-full bg-expresso text-seashell-pink text-[15px] font-[600] px-6 py-3 shadow-[0_3px_8px_0_rgba(0,0,0,0.25)] hover:opacity-90 transition"
               >
                 Explore AI Training
-              </button>
+              </a>
               <a
-                href="#work"
-                className="rounded-full border border-brown/40 text-brown text-[15px] font-[400] px-6 py-3 hover:bg-white/40 transition"
+                href="#products"
+                className="rounded-full border border-brown/40 text-brown text-[15px] font-[500] px-6 py-3 hover:bg-white/40 transition"
               >
-                See our work
+                See our portfolio
               </a>
             </div>
             <div className="flex flex-wrap gap-2">
-              {["AI Integration", "Web & App Dev", "Cloud Architecture"].map((p) => (
-                <span key={p} className="bg-white/50 border border-brown/15 text-liver-brown text-[13px] font-[400] px-4 py-1.5 rounded-full">
+              {hero.pills.map((p) => (
+                <span
+                  key={p}
+                  className="bg-white/50 border border-brown/15 text-liver-brown text-[13px] font-[500] px-4 py-1.5 rounded-full"
+                >
                   {p}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* GLOBE — kept */}
-          <div className="relative flex items-center justify-center md:justify-end">
+          {/* GLOBE — clipped: the spin animation's bounding box grows by √2 as it
+              rotates, which otherwise pushes the page wider than the viewport.
+              The artwork is a circle on transparent corners, so nothing shows. */}
+          <div className="relative flex items-center justify-center md:justify-end overflow-hidden">
             <Image
               src="/globe.png"
               width={560}
               height={560}
               alt="globe"
               priority
-              className="w-[260px] md:w-[480px] max-w-none animate-spin [animation-duration:26s] [animation-timing-function:linear]"
+              className="w-[260px] md:w-full md:max-w-[480px] animate-spin [animation-duration:26s] [animation-timing-function:linear]"
             />
           </div>
         </section>
 
-        {/* ===== WORK ===== */}
-        <section id="work" className="py-16">
-          <SectionHead eyebrow="Portfolio" title="Building smart tools for a smarter world"
-            sub="Explore our portfolio of AI agents and apps." />
-          <div className="grid md:grid-cols-4 md:auto-rows-[1fr] gap-4">
-            {/* feature tile */}
-            <div className="md:col-span-2 md:row-span-2 rounded-[24px] p-7 flex flex-col justify-between bg-[linear-gradient(150deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_18px_0_rgba(0,0,0,0.18)]">
-              <div>
-                <p className="text-almond-silk text-[11px] font-[600] tracking-[2px] uppercase mb-4">{products[0].tag}</p>
-                <Image src={products[0].image} alt={products[0].title} width={72} height={72} className="object-contain opacity-90 mb-4" />
-                <h3 className="text-seashell-pink text-[26px] font-[600] mb-1">{products[0].title}</h3>
-                <p className="text-almond-silk text-[14px] font-[400] mb-3">{products[0].role}</p>
-                <p className="text-cream text-[15px] font-[300]">{products[0].description}</p>
-              </div>
-              <div className="mt-6">
-                <button
-                  onClick={() => open(products[0].url)}
-                  className="group inline-flex items-center gap-2 rounded-full bg-seashell-pink text-expresso text-[15px] font-[500] px-6 py-3 hover:bg-white transition cursor-pointer"
-                >
-                  {products[0].cta}
-                  <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-                </button>
-              </div>
-            </div>
-            {/* two smaller tiles */}
-            {products.slice(1).map((p) => (
-              <div key={p.title} className="md:col-span-2 rounded-[24px] p-6 flex items-start gap-5 bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] shadow-[0_3px_20px_0_rgba(0,0,0,0.15)]">
-                <Image src={p.image} alt={p.title} width={64} height={64} className="object-contain opacity-70 shrink-0" />
-                <div className="flex flex-col">
-                  <h3 className="text-expresso text-[20px] font-[600] leading-tight">{p.title}</h3>
-                  <p className="text-redwood text-[13px] font-[500] mb-1.5">{p.role}</p>
-                  <p className="text-liver-brown text-[14px] font-[300] mb-3 line-clamp-3">{p.description}</p>
-                  <button onClick={() => open(p.url)} className="self-start text-expresso text-[14px] font-[500] hover:underline cursor-pointer">
-                    {p.cta} →
-                  </button>
-                </div>
+        {/* ===== PROOF + BRANDS ===== */}
+        <section className="pb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="rounded-[20px] bg-white/50 border border-white/60 px-5 py-6 text-center flex flex-col justify-center"
+              >
+                <p className="text-expresso text-[28px] md:text-[34px] font-[700] leading-none">
+                  {s.value}
+                </p>
+                <p className="text-liver-brown text-[13px] font-[400] mt-2">{s.label}</p>
               </div>
             ))}
           </div>
 
-          {/* ===== BRANDS MARQUEE — kept ===== */}
-          <div className="mt-12">
-            <h2 className="text-expresso font-[500]">Brands</h2>
-            <p className="text-liver-brown font-[300] mt-1 mb-6">Brands our team has worked with</p>
+          <div className="mt-10">
+            <h2 className="text-expresso text-[20px] font-[600]">Brands</h2>
+            <p className="text-liver-brown font-[400] mt-1 mb-6">
+              Organisations we have worked with
+            </p>
             <div className="flex flex-col gap-3">
               {[clients, [...clients].reverse()].map((row, rowIdx) => (
                 <div key={rowIdx} className="brands-row relative overflow-hidden h-[90px] md:h-[110px]">
                   <div
-                    className={`absolute flex top-0 left-0 ${rowIdx === 0 ? "animate-marquee" : "animate-marquee-reverse"}`}
+                    className={`absolute flex top-0 left-0 ${
+                      rowIdx === 0 ? "animate-marquee" : "animate-marquee-reverse"
+                    }`}
                     style={{ width: "max-content", willChange: "transform", transform: "translateZ(0)" }}
                   >
-                    {Array.from({ length: 10 }, () => row).flat().map((c, i) => (
-                      <button
-                        key={i}
-                        onClick={() => open(c.url)}
-                        className={`flex items-center justify-center w-[160px] md:w-[240px] shrink-0 px-2 bg-transparent border-0 ${c.url ? "cursor-pointer" : "cursor-default"}`}
-                      >
-                        <Image src={c.logo} alt={c.name} width={c.w} height={c.h} style={{ width: c.w, height: c.h }} className="object-contain shrink-0" loading="eager" />
-                      </button>
-                    ))}
+                    {Array.from({ length: 10 }, () => row).flat().map((c, i) => {
+                      const logo = (
+                        <Image
+                          src={c.logo}
+                          alt={c.name}
+                          width={c.w}
+                          height={c.h}
+                          style={{ width: c.w, height: c.h }}
+                          className="object-contain shrink-0"
+                          loading="eager"
+                        />
+                      );
+                      const cls = "flex items-center justify-center w-[160px] md:w-[240px] shrink-0 px-2";
+                      /* duplicated for the marquee loop — hide clones from a11y and search */
+                      const clone = i >= row.length;
+                      return c.url ? (
+                        <a
+                          key={i}
+                          href={c.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={cls}
+                          aria-hidden={clone}
+                          tabIndex={clone ? -1 : undefined}
+                        >
+                          {logo}
+                        </a>
+                      ) : (
+                        <span key={i} className={cls} aria-hidden={clone}>
+                          {logo}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -276,100 +265,242 @@ export default function LandingPro() {
           </div>
         </section>
 
+        {/* ===== WHAT WE DO ===== */}
+        <section id="services" className="py-16">
+          <SectionHead
+            eyebrow="What we do"
+            title="Operationalising Agentic AI for you"
+            sub={ethos}
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {services.map((s) => (
+              <div
+                key={s.title}
+                className="rounded-[20px] p-6 bg-white/50 border border-white/60 hover:bg-white/70 transition"
+              >
+                <strong className="block text-expresso text-[18px] font-[700] mb-2">{s.title}</strong>
+                <span className="text-liver-brown text-[14px] font-[400]">{s.blurb}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== PRODUCTS ===== */}
+        <section id="products" className="py-16">
+          <SectionHead
+            eyebrow="Our Portfolio"
+            title="AI-native products we build and run"
+            sub="Everything we ship, from autonomous agents to civic platforms — the same practice we teach."
+          />
+          <div className="grid md:grid-cols-4 md:auto-rows-[1fr] gap-4">
+            {products.map((p) =>
+              p.flagship ? (
+                <FeatureTile key={p.title} product={p} />
+              ) : (
+                <SmallTile key={p.title} product={p} className="md:col-span-2" />
+              )
+            )}
+          </div>
+        </section>
+
         {/* ===== AI TRAINING ===== */}
         <section id="training" className="py-16">
-          <div className="rounded-[28px] p-7 md:p-12 bg-[linear-gradient(135deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_24px_0_rgba(0,0,0,0.18)]">
+          <div className="surface-inverse rounded-[28px] p-7 md:p-12 shadow-[0_18px_50px_-20px_rgba(45,25,22,0.55)]">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-9">
               <div>
-                <span className="inline-block bg-almond-silk text-expresso text-[12px] font-[600] tracking-wide px-3 py-1 rounded-full mb-3">
-                  New · AI Training
+                <span className="inline-block bg-almond-silk text-expresso text-[12px] font-[700] tracking-wide px-3 py-1 rounded-full mb-3">
+                  AI Training
                 </span>
-                <h2 className="text-seashell-pink text-[30px] md:text-[38px] font-[600] leading-tight">
-                  Teach your team to build with AI
+                <h2 className="text-seashell-pink text-[30px] md:text-[38px] font-[700] leading-tight">
+                  Agentic AI is the new delegation
                 </h2>
               </div>
-              <p className="text-cream font-[300] md:max-w-sm">
-                Practitioner-led programs from the engineers behind our own AI agents — from
-                literacy to shipping agentic systems with Claude Code.
+              <p className="text-almond-silk font-[400] md:max-w-sm">
+                Your leaders already run multi-agent systems — they are called teams. You brief them,
+                set the gates, verify the outcomes. We extend that craft to software.
               </p>
             </div>
 
+            {/* Programmes — headline only; detail on request.
+                3 columns so the flagship spans a row and the other three fill the next. */}
             <div className="grid md:grid-cols-3 gap-4">
-              {trainingTracks.map((t, i) => (
+              {programmes.map((p) => (
                 <div
-                  key={t.title}
+                  key={p.title}
                   className={`rounded-[20px] p-6 flex flex-col ${
-                    i === 1
-                      ? "bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)]"
-                      : "bg-white/[0.06] border border-cream/15"
+                    p.flagship
+                      ? "bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] md:col-span-3"
+                      : "surface-inset-interactive"
                   }`}
                 >
-                  <span className={`text-[11px] font-[600] tracking-[1.5px] uppercase mb-2 ${i === 1 ? "text-redwood" : "text-almond-silk"}`}>
-                    {t.level}
+                  <span
+                    className={`text-[11px] font-[700] tracking-[1.5px] uppercase mb-2 ${
+                      p.flagship ? "text-redwood" : "text-ember"
+                    }`}
+                  >
+                    {p.kicker}
                   </span>
-                  <h3 className={`text-[19px] font-[600] mb-2 ${i === 1 ? "text-expresso" : "text-seashell-pink"}`}>{t.title}</h3>
-                  <p className={`text-[14px] font-[300] mb-4 ${i === 1 ? "text-liver-brown" : "text-cream"}`}>{t.blurb}</p>
-                  <ul className="mt-auto space-y-1.5">
-                    {t.points.map((pt) => (
-                      <li key={pt} className={`text-[13px] font-[300] flex gap-2 ${i === 1 ? "text-liver-brown" : "text-cream"}`}>
-                        <span className="text-rose font-[600]">›</span>{pt}
-                      </li>
-                    ))}
-                  </ul>
+                  <h3
+                    className={`text-[21px] font-[700] mb-1 ${
+                      p.flagship ? "text-expresso" : "text-seashell-pink"
+                    }`}
+                  >
+                    {p.title}
+                  </h3>
+                  <p
+                    className={`text-[13px] font-[600] mb-3 ${
+                      p.flagship ? "text-redwood" : "text-ember"
+                    }`}
+                  >
+                    {p.format}
+                  </p>
+                  <p
+                    className={`text-[14px] font-[400] ${
+                      p.flagship ? "text-liver-brown" : "text-almond-silk"
+                    }`}
+                  >
+                    {p.blurb}
+                  </p>
+
+                  <Reveal
+                    label="What you get"
+                    tone={p.flagship ? "light" : "dark"}
+                    className="mt-auto pt-4"
+                  >
+                    <ul
+                      className={`space-y-1.5 pb-1 ${
+                        p.flagship ? "sm:grid sm:grid-cols-2 sm:gap-x-6 sm:space-y-0" : ""
+                      }`}
+                    >
+                      {p.outcomes.map((o) => (
+                        <li
+                          key={o}
+                          className={`text-[13px] font-[400] flex gap-2 ${
+                            p.flagship ? "text-liver-brown sm:py-0.5" : "text-almond-silk"
+                          }`}
+                        >
+                          <span className="text-ember font-[700]">›</span>
+                          {o}
+                        </li>
+                      ))}
+                    </ul>
+                  </Reveal>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 rounded-[20px] p-5 md:p-6 bg-white/[0.05] border border-cream/15 flex flex-col md:flex-row md:items-center gap-5">
-              <Image src="/workshop.svg" alt="workshop" width={64} height={64} className="object-contain opacity-90 shrink-0" />
-              <div className="flex-1">
-                <h3 className="text-seashell-pink text-[17px] font-[500] mb-1">Built on the canon</h3>
-                <p className="text-cream text-[13px] font-[300] mb-2">Our curriculum draws on the foundational texts in agentic AI:</p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-                  {readingList.map((b) => (
-                    <li key={b} className="text-cream text-[12px] font-[300] flex gap-2"><span className="text-rose">•</span>{b}</li>
+            {/* Everything else, folded away */}
+            <div className="mt-4 grid md:grid-cols-3 gap-4">
+              <Panel title="The 12-week journey" hint="What ships, week by week">
+                <div className="grid grid-cols-2 gap-2.5 pt-4">
+                  {journey.map((j) => (
+                    <div key={j.when} className="rounded-[12px] surface-inset-quiet p-3">
+                      <span className="block text-ember text-[10px] font-[700] tracking-[1.5px] uppercase mb-1">
+                        {j.when}
+                      </span>
+                      <strong className="block text-seashell-pink text-[13px] font-[700] leading-snug">
+                        {j.title}
+                      </strong>
+                      <span className="text-almond-silk text-[11px] font-[400]">{j.ships}</span>
+                    </div>
                   ))}
-                </ul>
-              </div>
-              <Button text="Book a workshop" onClick={() => open("mailto:contact@smalltech.in?subject=AI%20Training")} />
+                </div>
+              </Panel>
+
+              <Panel title="Between the Fridays" hint="How the cohort stays on track">
+                <div className="flex flex-col gap-2.5 pt-4">
+                  {deliveryModel.map((d) => (
+                    <div key={d.title} className="rounded-[12px] surface-inset-quiet p-3.5">
+                      <strong className="block text-seashell-pink text-[13px] font-[700] mb-1">
+                        {d.title}
+                      </strong>
+                      <span className="text-almond-silk text-[12px] font-[400]">{d.blurb}</span>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+
+              <Panel title="Senior practitioners only" hint="Who actually runs the room">
+                <div className="flex flex-col gap-2.5 pt-4">
+                  <p className="text-almond-silk text-[12px] font-[400]">{facilitators.summary}</p>
+                  {facilitators.people.map((p) => (
+                    <div key={p.name} className="rounded-[12px] surface-inset-quiet p-3.5 flex gap-3">
+                      <span className="shrink-0 grid place-items-center w-9 h-9 rounded-full bg-almond-silk text-expresso text-[13px] font-[700]">
+                        {p.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                      </span>
+                      <div>
+                        <strong className="block text-seashell-pink text-[13px] font-[700] leading-tight">
+                          {p.name}
+                        </strong>
+                        <span className="block text-ember text-[10px] font-[700] tracking-[1.2px] uppercase mt-0.5 mb-1">
+                          {p.role}
+                        </span>
+                        <span className="text-almond-silk text-[11px] font-[400]">{p.bio}</span>
+                      </div>
+                    </div>
+                  ))}
+                  <p className="text-almond-silk text-[11px] font-[400] mt-1">
+                    Shipped and built at — {facilitators.employers.join(" · ")}
+                  </p>
+                </div>
+              </Panel>
+            </div>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a
+                href={mailto("AI Training enquiry")}
+                className="shrink-0 whitespace-nowrap rounded-full bg-seashell-pink text-expresso text-[15px] font-[600] px-6 py-3 hover:bg-white transition"
+              >
+                Talk to us about a cohort
+              </a>
+              <p className="text-almond-silk text-[13px] font-[400]">
+                Every engagement starts with a one-day taster for your leadership — the room builds a
+                working agent before you commit to anything.
+              </p>
             </div>
           </div>
         </section>
 
         {/* ===== TECHNOLOGIES ===== */}
         <section id="tech" className="py-16">
-          <SectionHead eyebrow="Stack" title="Technologies we support"
-            sub="Integrate AI across your existing tech stack." />
+          <SectionHead
+            eyebrow="Stack"
+            title="Technologies we support"
+            sub="Integrate AI across your existing tech stack."
+          />
           <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-9 gap-3">
             {techItems.map((icon) => (
-              <div key={icon.src} className="aspect-square rounded-[16px] bg-white/45 border border-white/60 grid place-items-center hover:bg-white/70 transition">
-                <Image src={asset(icon.src)} alt={icon.alt} width={42} height={42} className="object-contain opacity-80" />
+              <div
+                key={icon.src}
+                className="aspect-square rounded-[16px] bg-white/45 border border-white/60 grid place-items-center hover:bg-white/70 transition"
+              >
+                <Image
+                  src={asset(icon.src)}
+                  alt={icon.alt}
+                  width={42}
+                  height={42}
+                  className="object-contain opacity-80"
+                />
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* ===== DOMAINS ===== */}
-        <section id="domains" className="py-16">
-          <SectionHead eyebrow="Reach" title="Domains we work across"
-            sub="Deep expertise across technology and business workflows." />
-          <div className="grid md:grid-cols-2 gap-8">
-            <DomainGroup label="Tech Domains" items={techDomains.flat()} />
-            <DomainGroup label="Business Workflows" items={businessDomains.flat()} />
           </div>
         </section>
       </div>
 
       {/* ===== FOOTER ===== */}
       <footer className="border-t border-redwood/10 mt-8">
-        <div className="max-w-[1200px] mx-auto px-[4%] py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[14px] font-[300] text-deep-mocha">
+        <div className="max-w-[1200px] mx-auto px-[4%] py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[14px] font-[400] text-deep-mocha">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="logo" width={0} height={0} sizes="36px" className="h-7 w-auto object-contain" />
-            <span className="font-[500]">smallTech</span>
+            <span className="font-[600]">smallTech</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="https://github.com/smallTechOrg" target="_blank" rel="noreferrer" className="hover:underline">github</a>
-            <a href="mailto:contact@smalltech.in" className="hover:underline">mail</a>
+            <a href="https://github.com/smallTechOrg" target="_blank" rel="noreferrer" className="hover:underline">
+              github
+            </a>
+            <a href="mailto:contact@smalltech.in" className="hover:underline">
+              mail
+            </a>
             <span className="text-expresso">© 2026 madhyamakist pvt ltd</span>
           </div>
         </div>
@@ -378,31 +509,194 @@ export default function LandingPro() {
   );
 }
 
-function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
+/* ------------------------------------------------------------ partials */
+
+/**
+ * Inline "show more" used inside a card. Animates on grid-template-rows so the
+ * panel eases to its natural height without hard-coding a max-height.
+ */
+function Reveal({
+  label,
+  children,
+  tone = "dark",
+  className = "",
+}: {
+  label: string;
+  children: ReactNode;
+  tone?: "dark" | "light";
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const colour = tone === "light" ? "text-redwood" : "text-almond-silk";
+
   return (
-    <div className="mb-8">
-      <p className="text-redwood text-[12px] font-[600] tracking-[3px] uppercase mb-2">{eyebrow}</p>
-      <h2 className="text-deep-mocha text-[30px] md:text-[36px] font-[600] leading-tight">{title}</h2>
-      <p className="text-liver-brown text-[16px] md:text-[17px] font-[300] mt-1">{sub}</p>
+    <div className={className}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className={`group inline-flex items-center gap-1.5 text-[13px] font-[600] cursor-pointer ${colour} hover:opacity-80 transition-opacity`}
+      >
+        {label}
+        <span className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}>⌄</span>
+      </button>
+      <div
+        id={id}
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
     </div>
   );
 }
 
-function DomainGroup({ label, items }: { label: string; items: { src: string; title: string; subtitle: string }[] }) {
+/** A foldable panel on the dark training card. Collapsed by default. */
+function Panel({ title, hint, children }: { title: string; hint: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
   return (
-    <div>
-      <h3 className="text-redwood text-[13px] font-[600] tracking-[2px] uppercase mb-4">{label}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {items.map((d) => (
-          <div key={d.title} className="rounded-[16px] p-4 bg-white/50 border border-white/60 flex items-center gap-4">
-            <Image src={asset(d.src)} alt={d.title} width={40} height={40} className="object-contain opacity-80 shrink-0" />
-            <div>
-              <strong className="block text-expresso text-[16px] font-[600]">{d.title}</strong>
-              <span className="text-liver-brown text-[12px] font-[300]">{d.subtitle}</span>
-            </div>
-          </div>
-        ))}
+    <div className="rounded-[20px] surface-inset p-5 md:p-6 self-start w-full">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className="w-full text-left cursor-pointer group"
+      >
+        <span className="flex items-start justify-between gap-3">
+          <span className="text-seashell-pink text-[16px] font-[600] leading-snug">{title}</span>
+          <span
+            className={`shrink-0 grid place-items-center w-6 h-6 rounded-full border border-cream/30 text-almond-silk text-[12px] transition-transform duration-300 ${
+              open ? "rotate-45" : ""
+            }`}
+            aria-hidden
+          >
+            +
+          </span>
+        </span>
+        <span className="block text-almond-silk text-[12px] font-[400] mt-1.5">{hint}</span>
+      </button>
+      <div
+        id={id}
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
       </div>
+    </div>
+  );
+}
+
+function TagPill({ tag, tone }: { tag: string; tone: "dark" | "light" }) {
+  return (
+    <span
+      className={`inline-block text-[10px] font-[700] tracking-[1.5px] uppercase px-2.5 py-1 rounded-full ${
+        tone === "dark"
+          ? "bg-white/10 text-ember border border-cream/25"
+          : "bg-expresso/10 text-redwood border border-redwood/20"
+      }`}
+    >
+      {tag}
+    </span>
+  );
+}
+
+function FeatureTile({ product }: { product: Product }) {
+  return (
+    <div className="md:col-span-2 md:row-span-2 surface-inverse-accent rounded-[24px] p-7 flex flex-col justify-between shadow-[0_18px_45px_-20px_rgba(45,25,22,0.55)]">
+      <div>
+        <TagPill tag={product.tag} tone="dark" />
+        <Image
+          src={product.image}
+          alt={product.title}
+          width={72}
+          height={72}
+          /* the icon artwork is stroked in espresso — invert it so it reads on the dark tile */
+          className="object-contain mb-4 mt-5 opacity-85 [filter:brightness(0)_invert(1)]"
+        />
+        <h3 className="text-seashell-pink text-[26px] font-[700] mb-1">{product.title}</h3>
+        <p className="text-almond-silk text-[14px] font-[500] mb-3">{product.role}</p>
+        <p className="text-almond-silk text-[15px] font-[400]">{product.description}</p>
+        {product.points && (
+          <ul className="mt-5 space-y-2 border-t border-cream/15 pt-5">
+            {product.points.map((pt) => (
+              <li key={pt} className="text-almond-silk text-[14px] font-[400] flex gap-2.5">
+                <span className="text-ember font-[700]">›</span>
+                {pt}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="mt-6">
+        <a
+          href={product.url}
+          target="_blank"
+          rel="noreferrer"
+          className="group inline-flex items-center gap-2 rounded-full bg-seashell-pink text-expresso text-[15px] font-[600] px-6 py-3 hover:bg-white transition"
+        >
+          {product.cta}
+          <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function SmallTile({ product, className = "" }: { product: Product; className?: string }) {
+  return (
+    <div
+      className={`rounded-[24px] p-6 flex items-start gap-5 bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] shadow-[0_3px_20px_0_rgba(0,0,0,0.15)] ${className}`}
+    >
+      <Image
+        src={product.image}
+        alt={product.title}
+        width={56}
+        height={56}
+        className="object-contain opacity-70 shrink-0 mt-1"
+      />
+      <div className="flex flex-col">
+        <div className="mb-2">
+          <TagPill tag={product.tag} tone="light" />
+        </div>
+        <h3 className="text-expresso text-[19px] font-[700] leading-tight">{product.title}</h3>
+        <p className="text-redwood text-[13px] font-[600] mb-1.5">{product.role}</p>
+        <p className="text-liver-brown text-[14px] font-[400] mb-3">{product.description}</p>
+        <div className="mt-auto flex flex-wrap items-center gap-4">
+          <a
+            href={product.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-expresso text-[14px] font-[600] hover:underline"
+          >
+            {product.cta} →
+          </a>
+          {product.altUrl && (
+            <a
+              href={product.altUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-redwood text-[14px] font-[500] hover:underline"
+            >
+              {product.altCta}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
+  return (
+    <div className="mb-8">
+      <p className="text-redwood text-[12px] font-[700] tracking-[3px] uppercase mb-2">{eyebrow}</p>
+      <h2 className="text-deep-mocha text-[30px] md:text-[36px] font-[700] leading-tight">{title}</h2>
+      <p className="text-liver-brown text-[16px] md:text-[17px] font-[400] mt-1">{sub}</p>
     </div>
   );
 }
