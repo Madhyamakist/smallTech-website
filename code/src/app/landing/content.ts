@@ -1,8 +1,8 @@
 // Landing page content. Copy lives here; layout lives in components/landingPro.tsx.
 //
-// Positioning: one unified "AI-Native" message.
-//   · AI Training  -> enterprise & government leadership (where the proof is)
-//   · Products & solutions -> SMBs first, enterprises welcome
+// Positioning: one unified "AI-Native" message across three practices —
+// AI Training, AI Consulting and Applied AI — carried by a collective that
+// builds and runs its own agentic software.
 //
 // Disclosure rules agreed with the founder:
 //   · Named clients limited to UP Police and Warburg Pincus (+ its portfolio companies).
@@ -13,29 +13,57 @@
 
 export const hero = {
   eyebrow: "AI-Native by practice",
-  titleLead: "We are AI-Native.",
-  titleAccent: "Now you can be too.",
+  titleLead: "Changing how the world",
+  titleAccent: "works.",
   body:
-    "We build and run agentic software every day — then we teach your people to do the same. " +
-    "Enterprise leadership programmes that end in working agents, and a product suite that puts " +
-    "the same capability within reach of a small business.",
-  pills: ["Agentic AI Training", "AI Agents & Automation", "Forward-Deployed Engineering"],
+    "We are a collective of engineers, designers and thinkers who believe that AI can be and should be used for good. " +
+    "We do not only build and scale agentic software " +
+    "but we also aim to do so equitably and sustainably.",
+  pills: ["AI Training", "AI Consulting", "Applied AI"],
 };
 
 export const stats: { value: string; label: string }[] = [
   { value: "700+", label: "Professionals trained" },
   { value: "30+", label: "CXOs, MDs & HODs" },
-  { value: "10+", label: "Enterprise & government orgs" },
-  { value: "2\u00d7", label: "Government engagements, one ongoing" },
+  { value: "10+", label: "Enterprise & Gov Orgs" },
+  { value: "5+", label: "AI Agents Deployed" },
 ];
 
-/* ------------------------------------------------------- ai training */
+/* --------------------------------------------------------------- practices */
+
+export const services: { title: string; blurb: string }[] = [
+  {
+    title: "AI Training",
+    blurb:
+      "Hands-on upskilling for leadership and engineering teams — GenAI foundations through to multi-agent architectures.",
+  },
+  {
+    title: "AI Consulting",
+    blurb:
+      "Where AI actually pays back: use-case discovery, adoption roadmaps, build-vs-buy, governance and the economics of running it.",
+  },
+  {
+    title: "Applied AI",
+    blurb:
+      "Forward-deployed engineers shipping production agents inside your organisation, alongside your people.",
+  },
+  {
+    title: "Startup Advisory",
+    blurb:
+      "Tech incubation and MVP delivery across Civic Tech, FinTech and AI — including mentorship for funded teams.",
+  },
+];
+
+/** The collective's reason for building — kept from the original site. */
+export const ethos =
+  "We help leaders and tech orgs navigate the tumultous waters of AI adoption.";
+
+/* ------------------------------------------------------------- ai training */
 
 export interface Programme {
   kicker: string;
   title: string;
   format: string;
-  audience: string;
   blurb: string;
   outcomes: string[];
   flagship?: boolean;
@@ -48,10 +76,9 @@ export const programmes: Programme[] = [
     kicker: "Flagship · Executive",
     title: "The AI-Native Leader",
     format: "12 weeks · hybrid · cohort of 20–25",
-    audience: "Business & functional leadership",
     blurb:
       "Every leader builds and runs their own multi-agent AI chief of staff — and writes an AI " +
-      "adoption roadmap for their function. No code required.",
+      "adoption roadmap for their function.",
     outcomes: [
       "A personal SuperAgent, built two weeks at a time",
       "Working prototypes to real business problems, not proposals",
@@ -63,8 +90,7 @@ export const programmes: Programme[] = [
   {
     kicker: "Taster · Executive",
     title: "The Executive AI Masterclass",
-    format: "120 minutes · on site · demonstration-led",
-    audience: "Business & functional leaders — no laptops needed",
+    format: "120 minutes · on site",
     blurb:
       "The room picks an agent; we specify and build it live while covering the tools your leaders " +
       "already have licences for.",
@@ -78,8 +104,7 @@ export const programmes: Programme[] = [
   {
     kicker: "Hands-on · Engineering",
     title: "Engineering Tracks",
-    format: "Three tiers · from one day to multi-week",
-    audience: "Engineering & data teams",
+    format: "Three tiers · one day to multi-week",
     blurb:
       "The builder path, run by the engineers who ship our own agents — from AI literacy to " +
       "multi-agent systems in production.",
@@ -92,8 +117,7 @@ export const programmes: Programme[] = [
   {
     kicker: "Compact · Small business",
     title: "AI-Native in a Day",
-    format: "One day · on site or remote · small teams",
-    audience: "Founders and small-business teams",
+    format: "One day · on site or remote",
     blurb:
       "The essentials of running a business AI-natively — the tools, the workflows worth " +
       "automating first, and one agent live in your stack by the end of the day.",
@@ -106,7 +130,7 @@ export const programmes: Programme[] = [
   },
 ];
 
-/** The 12-week journey — the spine of the flagship programme. */
+/** The 12-week journey — revealed on request, not shown by default. */
 export const journey: { when: string; title: string; ships: string }[] = [
   { when: "W1", title: "Foundations", ships: "Your AI, live on your phone" },
   { when: "W2–3", title: "Communication Agent", ships: "Drafts and answers in your voice" },
@@ -116,6 +140,26 @@ export const journey: { when: string; title: string; ships: string }[] = [
   { when: "W10", title: "Hackathon", ships: "Team prototypes on real problems" },
   { when: "W11", title: "Assembly", ships: "Four agents become one SuperAgent" },
   { when: "W12", title: "Demo Day", ships: "Roadmaps presented · certification" },
+];
+
+/** What happens between sessions — revealed on request. */
+export const deliveryModel: { title: string; blurb: string }[] = [
+  {
+    title: "Field assignments",
+    blurb: "Run the sprint's agent on live work — real inbox, real meetings — and bring wins and friction back to the room.",
+  },
+  {
+    title: "A tracked cohort",
+    blurb: "Progress, usage and blockers logged in a shared tracker. We follow up before the next session; nobody arrives stuck.",
+  },
+  {
+    title: "A direct line",
+    blurb: "A support channel to the facilitation team between sessions, with office hours on request. Answers in hours.",
+  },
+  {
+    title: "Peer review",
+    blurb: "Leaders demo to each other every sprint. The cohort learns from twenty-five builds, not one.",
+  },
 ];
 
 /**
@@ -153,52 +197,37 @@ export const facilitators = {
   ],
 };
 
-/** What happens between sessions — the delivery model that makes cohorts stick. */
-export const deliveryModel: { title: string; blurb: string }[] = [
-  {
-    title: "Field assignments",
-    blurb: "Run the sprint's agent on live work — real inbox, real meetings — and bring wins and friction back to the room.",
-  },
-  {
-    title: "A tracked cohort",
-    blurb: "Progress, usage and blockers logged in a shared tracker. We follow up before the next session; nobody arrives stuck.",
-  },
-  {
-    title: "A direct line",
-    blurb: "A support channel to the facilitation team between sessions, with office hours on request. Answers in hours.",
-  },
-  {
-    title: "Peer review",
-    blurb: "Leaders demo to each other every sprint. The cohort learns from twenty-five builds, not one.",
-  },
-];
-
-/* --------------------------------------------------- products & work */
+/* ------------------------------------------------------------- our products */
 
 export interface Product {
   image: string;
   title: string;
   role: string;
+  /** Short pill shown on the tile — the only segmentation we do. */
   tag: string;
   description: string;
   cta: string;
   url: string;
-  /** Optional bullets — rendered on the large flagship tile. */
-  points?: string[];
   /** Secondary link, e.g. a live demo alongside source. */
   altCta?: string;
   altUrl?: string;
+  /** Optional bullets — rendered on the large flagship tile. */
+  points?: string[];
+  flagship?: boolean;
 }
 
-/** The Zer0 product line — agents we build, run and sell. SMB-first. */
-export const zeroProducts: Product[] = [
+/**
+ * One portfolio. We do not separate "platforms" from "agents" — everything here
+ * is an AI-native product we build and run; the tag is the only distinction.
+ */
+export const products: Product[] = [
   {
     image: "/robot.svg",
     title: "Zer0 Sales Agent",
     role: "Autonomous top-of-funnel",
-    tag: "Flagship · Zer0",
+    tag: "Zer0",
     description:
-      "A multi-tenant sales agent that runs cold prospecting through to first positive reply without human intervention — discover, research, qualify, outreach. Configured from a dashboard.",
+      "A multi-tenant sales agent that runs cold prospecting through to first positive reply without human intervention — discover, research, qualify, outreach.",
     cta: "Visit Zer0",
     url: "https://zero.smalltech.in",
     points: [
@@ -207,67 +236,18 @@ export const zeroProducts: Product[] = [
       "Writes and sends outreach, then follows up",
       "Hands you the conversation once it turns warm",
     ],
+    flagship: true,
   },
-  {
-    image: "/email.png",
-    title: "Zer0 Inbox Agent",
-    role: "Inbox triage you can audit",
-    tag: "Zer0 · Open Source",
-    description:
-      "Categorises every thread, collapses hundreds of them into ~30 decisions, and shows exactly why each call was made. Never deletes anything; nothing acts without your approval.",
-    cta: "View on GitHub",
-    url: "https://github.com/smallTechOrg/zero-inbox-agent",
-  },
-  {
-    image: "/security.png",
-    title: "Vanguard by Zer0",
-    role: "AI-first security audits",
-    tag: "Zer0",
-    description:
-      "Authorised website and application auditing with approval gates, evidence capture, immutable audit logs and professional reports. Safe-by-policy: passive checks only.",
-    cta: "Learn more",
-    url: "https://github.com/smallTechOrg/ai-security-agency",
-  },
-  {
-    image: "/ai.png",
-    title: "Zer0 Data Analyst",
-    role: "Your data, asked in English",
-    tag: "Zer0 · Live demo",
-    description:
-      "Upload a spreadsheet and ask questions in plain English. A reasoning loop over pandas returns explainable answers with inline charts — and shows every step it took.",
-    cta: "Try the live demo",
-    url: "https://data-analysis-agent-870371939888.us-central1.run.app/app/",
-    altCta: "Source",
-    altUrl: "https://github.com/smallTechOrg/data-analysis-agent",
-  },
-];
-
-/** Open-source developer tooling — how we build AI-natively, given away. */
-export const devTools: Product[] = [
   {
     image: "/draw.png",
     title: "zero-shot-harness",
-    role: "Spec-first build harness",
-    tag: "Open Source · Dev Tools",
+    role: "Installable skills for Claude & Hermes",
+    tag: "Open Source",
     description:
-      "Give it a one-line idea, walk away with a working, tested, phased project. Three skills — build, fix, sync — with the spec as the source of truth and a human gate at every phase. No default stack.",
+      "Three agent skills — build, fix and sync — installed straight into Claude Code or Hermes. Give it a one-line idea and walk away with a working, tested, phased project, spec-first with a human gate at every phase.",
     cta: "View on GitHub",
     url: "https://github.com/smallTechOrg/zero-shot-harness",
   },
-  {
-    image: "/python.png",
-    title: "zero-shot boilerplate",
-    role: "Agent starting point",
-    tag: "Open Source",
-    description:
-      "A spec-first baseline agent — FastAPI, LangGraph, provider-agnostic LLM — with the spec templates and sub-agent team already wired in. Tests pass out of the box.",
-    cta: "View on GitHub",
-    url: "https://github.com/smallTechOrg/zero-shot-claude-boilerplate",
-  },
-];
-
-/** Platforms and client work beyond the Zer0 line. */
-export const otherWork: Product[] = [
   {
     image: "/local.png",
     title: "#local",
@@ -282,45 +262,62 @@ export const otherWork: Product[] = [
     image: "/workshop.svg",
     title: "Workshop Helmsman",
     role: "Live cohort tracking",
-    tag: "Open Source · Internal",
+    tag: "Open Source",
     description:
-      "The self-hosted milestone tracker behind our own workshops — participants join with a name, facilitators watch the whole room live, with a built-in help desk.",
+      "The self-hosted milestone tracker behind our own workshops — participants join with a name, facilitators watch the whole room live.",
     cta: "View on GitHub",
     url: "https://github.com/smallTechOrg/workshop-helmsman",
+  },
+  {
+    image: "/ai.png",
+    title: "Zer0 Data Analyst",
+    role: "Your data, asked in English",
+    tag: "Zer0 · Live demo",
+    description:
+      "Upload a spreadsheet and ask questions in plain English. A reasoning loop over pandas returns explainable answers with inline charts.",
+    cta: "Try the live demo",
+    url: "https://data-analysis-agent-870371939888.us-central1.run.app/app/",
+    altCta: "Source",
+    altUrl: "https://github.com/smallTechOrg/data-analysis-agent",
+  },
+  {
+    image: "/email.png",
+    title: "Zer0 Inbox Agent",
+    role: "Inbox triage you can audit",
+    tag: "Zer0",
+    description:
+      "Categorises every thread, collapses hundreds of them into ~30 decisions, and shows exactly why each call was made. Never deletes anything.",
+    cta: "View on GitHub",
+    url: "https://github.com/smallTechOrg/zero-inbox-agent",
+  },
+  {
+    image: "/security.png",
+    title: "Vanguard by Zer0",
+    role: "AI-first security audits",
+    tag: "Zer0",
+    description:
+      "Authorised website and application auditing with approval gates, evidence capture, immutable audit logs and professional reports.",
+    cta: "Learn more",
+    url: "https://github.com/smallTechOrg/ai-security-agency",
+  },
+  {
+    image: "/python.png",
+    title: "zero-shot boilerplate",
+    role: "Agent starting point",
+    tag: "Open Source",
+    description:
+      "A spec-first baseline agent — FastAPI, LangGraph, provider-agnostic LLM — with spec templates and the sub-agent team already wired in.",
+    cta: "View on GitHub",
+    url: "https://github.com/smallTechOrg/zero-shot-claude-boilerplate",
   },
   {
     image: "/marketplace.png",
     title: "FinWerse",
     role: "MVP build & tech mentorship",
-    tag: "Startup Advisory",
+    tag: "FinTech",
     description:
       "AI-powered scores for every listed stock across four dimensions and three timeframes. We build the MVP and mentor the team. MeitY-funded.",
     cta: "Visit site",
     url: "https://finwerse.com",
-  },
-];
-
-/* ------------------------------------------------------------ services */
-
-export const services: { title: string; blurb: string }[] = [
-  {
-    title: "AI Training",
-    blurb:
-      "Hands-on upskilling for leadership and engineering teams — GenAI foundations through to multi-agent architectures.",
-  },
-  {
-    title: "Enterprise AI Transformation",
-    blurb:
-      "Forward-deployed engineers shipping production agents inside your organisation, alongside your people.",
-  },
-  {
-    title: "Agents & Automation for SMBs",
-    blurb:
-      "The Zer0 suite, deployed and tuned to your business — sales, inbox, support and analysis, without an AI team of your own.",
-  },
-  {
-    title: "Startup Advisory",
-    blurb:
-      "Tech incubation and MVP delivery across Civic Tech, FinTech and AI — including mentorship for funded teams.",
   },
 ];

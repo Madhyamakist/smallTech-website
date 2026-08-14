@@ -1,20 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, type ReactNode } from "react";
 import Image from "next/image";
 import { techItems } from "../offerings/icons";
-import { techDomains, businessDomains } from "../domains/constants";
 import {
   hero,
   stats,
+  services,
+  ethos,
   programmes,
   journey,
   facilitators,
   deliveryModel,
-  zeroProducts,
-  devTools,
-  otherWork,
-  services,
+  products,
   type Product,
 } from "../landing/content";
 import EmbedScript from "./embedScript";
@@ -49,15 +47,14 @@ const openChat = () => {
 };
 
 const NAV: { label: string; href?: string; chat?: boolean }[] = [
+  { label: "What we do", href: "#services" },
   { label: "AI Training", href: "#training" },
   { label: "Products", href: "#products" },
-  { label: "Work", href: "#work" },
   { label: "Contact", chat: true },
 ];
 
 export default function LandingPro() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -133,65 +130,6 @@ export default function LandingPro() {
               )
             )}
           </nav>
-
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            className="md:hidden ml-auto grid place-items-center w-10 h-10 rounded-full border border-redwood/25 text-expresso cursor-pointer"
-          >
-            <span className="relative block w-[18px] h-[12px]">
-              <span
-                className={`absolute left-0 h-[1.5px] w-full rounded-full bg-current transition-all duration-300 ${
-                  menuOpen ? "top-[5px] rotate-45" : "top-0"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[5px] h-[1.5px] w-full rounded-full bg-current transition-all duration-200 ${
-                  menuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 h-[1.5px] w-full rounded-full bg-current transition-all duration-300 ${
-                  menuOpen ? "top-[5px] -rotate-45" : "top-[10px]"
-                }`}
-              />
-            </span>
-          </button>
-        </div>
-
-        {/* Mobile menu panel */}
-        <div
-          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ${
-            menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <nav className="px-[6%] pb-5 flex flex-col gap-1">
-            {NAV.map((item) =>
-              item.chat ? (
-                <button
-                  key={item.label}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    openChat();
-                  }}
-                  className="text-left text-[16px] font-[400] text-liver-brown py-2.5 border-b border-redwood/10 cursor-pointer"
-                >
-                  {item.label}
-                </button>
-              ) : (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-[16px] font-[400] text-liver-brown py-2.5 border-b border-redwood/10"
-                >
-                  {item.label}
-                </a>
-              )
-            )}
-          </nav>
         </div>
       </header>
 
@@ -213,7 +151,7 @@ export default function LandingPro() {
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               <a
-                href={mailto("AI Training enquiry")}
+                href="#training"
                 className="rounded-full bg-expresso text-seashell-pink text-[15px] font-[500] px-6 py-3 shadow-[0_3px_8px_0_rgba(0,0,0,0.25)] hover:opacity-90 transition"
               >
                 Explore AI Training
@@ -222,7 +160,7 @@ export default function LandingPro() {
                 href="#products"
                 className="rounded-full border border-brown/40 text-brown text-[15px] font-[400] px-6 py-3 hover:bg-white/40 transition"
               >
-                See the Zer0 suite
+                See our products
               </a>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -252,7 +190,7 @@ export default function LandingPro() {
           </div>
         </section>
 
-        {/* ===== PROOF STRIP ===== */}
+        {/* ===== PROOF + BRANDS ===== */}
         <section className="pb-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {stats.map((s) => (
@@ -267,206 +205,11 @@ export default function LandingPro() {
               </div>
             ))}
           </div>
-          <p className="text-liver-brown/80 text-[13px] font-[300] text-center mt-4">
-            Delivered for enterprise and government — including UP Police Technical Services and a
-            Warburg Pincus leadership cohort with its portfolio companies.
-          </p>
-        </section>
 
-        {/* ===== AI TRAINING ===== */}
-        <section id="training" className="py-16">
-          <div className="rounded-[28px] p-7 md:p-12 bg-[linear-gradient(135deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_24px_0_rgba(0,0,0,0.18)]">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-9">
-              <div>
-                <span className="inline-block bg-almond-silk text-expresso text-[12px] font-[600] tracking-wide px-3 py-1 rounded-full mb-3">
-                  AI Training · Enterprise
-                </span>
-                <h2 className="text-seashell-pink text-[30px] md:text-[38px] font-[600] leading-tight">
-                  Agentic AI is the new delegation
-                </h2>
-              </div>
-              <p className="text-almond-silk font-[300] md:max-w-sm">
-                Your leaders already run multi-agent systems — they are called teams. You brief them,
-                set the gates, verify the outcomes. We extend that craft to software.
-              </p>
-            </div>
-
-            {/* Programme cards — flagship spans the row, the other three fill the next */}
-            <div className="grid md:grid-cols-3 gap-4">
-              {programmes.map((p) => (
-                <div
-                  key={p.title}
-                  className={`rounded-[20px] p-6 flex flex-col ${
-                    p.flagship
-                      ? "bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] md:col-span-3"
-                      : "bg-white/[0.06] border border-cream/15"
-                  }`}
-                >
-                  <span
-                    className={`text-[11px] font-[600] tracking-[1.5px] uppercase mb-2 ${
-                      p.flagship ? "text-redwood" : "text-almond-silk"
-                    }`}
-                  >
-                    {p.kicker}
-                  </span>
-                  <h3
-                    className={`text-[21px] font-[600] mb-1 ${
-                      p.flagship ? "text-expresso" : "text-seashell-pink"
-                    }`}
-                  >
-                    {p.title}
-                  </h3>
-                  <p
-                    className={`text-[13px] font-[500] mb-1 ${
-                      p.flagship ? "text-redwood" : "text-almond-silk"
-                    }`}
-                  >
-                    {p.format}
-                  </p>
-                  <p
-                    className={`text-[12px] font-[300] mb-3 ${
-                      p.flagship ? "text-liver-brown" : "text-almond-silk"
-                    }`}
-                  >
-                    {p.audience}
-                  </p>
-                  <p
-                    className={`text-[14px] font-[300] mb-4 ${
-                      p.flagship ? "text-liver-brown" : "text-almond-silk"
-                    }`}
-                  >
-                    {p.blurb}
-                  </p>
-                  <ul
-                    className={`mt-auto space-y-1.5 ${
-                      p.flagship ? "sm:grid sm:grid-cols-2 sm:gap-x-6 sm:space-y-0" : ""
-                    }`}
-                  >
-                    {p.outcomes.map((o) => (
-                      <li
-                        key={o}
-                        className={`text-[13px] font-[300] flex gap-2 ${
-                          p.flagship ? "text-liver-brown sm:py-0.5" : "text-almond-silk"
-                        }`}
-                      >
-                        <span className="text-rose font-[600]">›</span>
-                        {o}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            {/* The 12-week journey */}
-            <div className="mt-6 rounded-[20px] p-6 md:p-7 bg-white/[0.05] border border-cream/15">
-              <h3 className="text-seashell-pink text-[17px] font-[500] mb-1">
-                The AI-Native Leader — what ships, week by week
-              </h3>
-              <p className="text-almond-silk text-[13px] font-[300] mb-5">
-                One Friday afternoon at a time: two hours in the boardroom on the business of AI,
-                two hours in the lab building. Every leader ends each sprint with working software.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {journey.map((j) => (
-                  <div
-                    key={j.when}
-                    className="rounded-[14px] bg-white/[0.06] border border-cream/10 p-4 flex flex-col"
-                  >
-                    <span className="text-almond-silk text-[11px] font-[600] tracking-[1.5px] uppercase mb-1.5">
-                      {j.when}
-                    </span>
-                    <strong className="text-seashell-pink text-[14px] font-[600] leading-snug mb-1">
-                      {j.title}
-                    </strong>
-                    <span className="text-almond-silk text-[12px] font-[300]">{j.ships}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Between the sessions */}
-            <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {deliveryModel.map((d) => (
-                <div
-                  key={d.title}
-                  className="rounded-[16px] bg-white/[0.05] border border-cream/15 p-5"
-                >
-                  <strong className="block text-seashell-pink text-[14px] font-[600] mb-1.5">
-                    {d.title}
-                  </strong>
-                  <span className="text-almond-silk text-[12px] font-[300]">{d.blurb}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Facilitators — progressive disclosure */}
-            <Facilitators />
-
-            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <a
-                href={mailto("AI Training enquiry")}
-                className="shrink-0 whitespace-nowrap rounded-full bg-seashell-pink text-expresso text-[15px] font-[500] px-6 py-3 hover:bg-white transition"
-              >
-                Talk to us about a cohort
-              </a>
-              <p className="text-almond-silk text-[13px] font-[300]">
-                Every engagement starts with a one-day taster for your leadership — the room builds a
-                working agent before you commit to anything.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== PRODUCTS — ZER0 SUITE ===== */}
-        <section id="products" className="py-16">
-          <SectionHead
-            eyebrow="The Zer0 suite"
-            title="AI agents small businesses can actually run"
-            sub="The same agents we run ourselves — deployed and tuned to your business, no AI team required."
-          />
-          <div className="grid md:grid-cols-4 md:auto-rows-[1fr] gap-4">
-            {/* flagship tile — spans the three rows the smaller tiles occupy */}
-            <FeatureTile product={zeroProducts[0]} />
-            {zeroProducts.slice(1).map((p) => (
-              <SmallTile key={p.title} product={p} className="md:col-span-2" />
-            ))}
-          </div>
-
-          {/* Dev tools */}
-          <h3 className="text-redwood text-[13px] font-[600] tracking-[2px] uppercase mt-12 mb-4">
-            How we build — given away
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {devTools.map((p) => (
-              <SmallTile key={p.title} product={p} />
-            ))}
-          </div>
-        </section>
-
-        {/* ===== WORK ===== */}
-        <section id="work" className="py-16">
-          <SectionHead
-            eyebrow="Portfolio"
-            title="Platforms, products and client work"
-            sub="Civic tech, fintech and the tooling behind our own delivery."
-          />
-          <div className="grid md:grid-cols-2 gap-4">
-            {otherWork.map((p, i) => (
-              <SmallTile
-                key={p.title}
-                product={p}
-                /* odd count: let the trailing tile fill the row */
-                className={i === otherWork.length - 1 && otherWork.length % 2 ? "md:col-span-2" : ""}
-              />
-            ))}
-          </div>
-
-          {/* ===== BRANDS MARQUEE ===== */}
-          <div className="mt-12">
-            <h3 className="text-expresso font-[500]">Brands</h3>
+          <div className="mt-10">
+            <h2 className="text-expresso text-[20px] font-[500]">Brands</h2>
             <p className="text-liver-brown font-[300] mt-1 mb-6">
-              Organisations we have delivered for, and brands our team has built at
+              Organisations we have worked with
             </p>
             <div className="flex flex-col gap-3">
               {[clients, [...clients].reverse()].map((row, rowIdx) => (
@@ -517,14 +260,14 @@ export default function LandingPro() {
           </div>
         </section>
 
-        {/* ===== SERVICES ===== */}
+        {/* ===== WHAT WE DO ===== */}
         <section id="services" className="py-16">
           <SectionHead
-            eyebrow="What we do"
-            title="Builders who train builders"
-            sub="Four practices, one operating philosophy — everything we teach, we ship."
+            eyebrow="We Preach What We Practice"
+            title="Operationalising Agentic AI for you"
+            sub={ethos}
           />
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((s) => (
               <div
                 key={s.title}
@@ -534,6 +277,181 @@ export default function LandingPro() {
                 <span className="text-liver-brown text-[14px] font-[300]">{s.blurb}</span>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ===== AI TRAINING ===== */}
+        <section id="training" className="py-16">
+          <div className="rounded-[28px] p-7 md:p-12 bg-[linear-gradient(135deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_24px_0_rgba(0,0,0,0.18)]">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-9">
+              <div>
+                <span className="inline-block bg-almond-silk text-expresso text-[12px] font-[600] tracking-wide px-3 py-1 rounded-full mb-3">
+                  AI Training
+                </span>
+                <h2 className="text-seashell-pink text-[30px] md:text-[38px] font-[600] leading-tight">
+                  Agentic AI is the new delegation
+                </h2>
+              </div>
+              <p className="text-almond-silk font-[300] md:max-w-sm">
+                Your leaders already run multi-agent systems — they are called teams. You brief them,
+                set the gates, verify the outcomes. We extend that craft to software.
+              </p>
+            </div>
+
+            {/* Programmes — headline only; detail on request.
+                3 columns so the flagship spans a row and the other three fill the next. */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {programmes.map((p) => (
+                <div
+                  key={p.title}
+                  className={`rounded-[20px] p-6 flex flex-col ${
+                    p.flagship
+                      ? "bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] md:col-span-3"
+                      : "bg-white/[0.06] border border-cream/15"
+                  }`}
+                >
+                  <span
+                    className={`text-[11px] font-[600] tracking-[1.5px] uppercase mb-2 ${
+                      p.flagship ? "text-redwood" : "text-almond-silk"
+                    }`}
+                  >
+                    {p.kicker}
+                  </span>
+                  <h3
+                    className={`text-[21px] font-[600] mb-1 ${
+                      p.flagship ? "text-expresso" : "text-seashell-pink"
+                    }`}
+                  >
+                    {p.title}
+                  </h3>
+                  <p
+                    className={`text-[13px] font-[500] mb-3 ${
+                      p.flagship ? "text-redwood" : "text-almond-silk"
+                    }`}
+                  >
+                    {p.format}
+                  </p>
+                  <p
+                    className={`text-[14px] font-[300] ${
+                      p.flagship ? "text-liver-brown" : "text-almond-silk"
+                    }`}
+                  >
+                    {p.blurb}
+                  </p>
+
+                  <Reveal
+                    label="What you get"
+                    tone={p.flagship ? "light" : "dark"}
+                    className="mt-auto pt-4"
+                  >
+                    <ul
+                      className={`space-y-1.5 pb-1 ${
+                        p.flagship ? "sm:grid sm:grid-cols-2 sm:gap-x-6 sm:space-y-0" : ""
+                      }`}
+                    >
+                      {p.outcomes.map((o) => (
+                        <li
+                          key={o}
+                          className={`text-[13px] font-[300] flex gap-2 ${
+                            p.flagship ? "text-liver-brown sm:py-0.5" : "text-almond-silk"
+                          }`}
+                        >
+                          <span className="text-rose font-[600]">›</span>
+                          {o}
+                        </li>
+                      ))}
+                    </ul>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+
+            {/* Everything else, folded away */}
+            <div className="mt-4 grid md:grid-cols-3 gap-4">
+              <Panel title="The 12-week journey" hint="What ships, week by week">
+                <div className="grid grid-cols-2 gap-2.5 pt-4">
+                  {journey.map((j) => (
+                    <div key={j.when} className="rounded-[12px] bg-white/[0.06] border border-cream/10 p-3">
+                      <span className="block text-almond-silk text-[10px] font-[600] tracking-[1.5px] uppercase mb-1">
+                        {j.when}
+                      </span>
+                      <strong className="block text-seashell-pink text-[13px] font-[600] leading-snug">
+                        {j.title}
+                      </strong>
+                      <span className="text-almond-silk text-[11px] font-[300]">{j.ships}</span>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+
+              <Panel title="Between the Fridays" hint="How the cohort stays on track">
+                <div className="flex flex-col gap-2.5 pt-4">
+                  {deliveryModel.map((d) => (
+                    <div key={d.title} className="rounded-[12px] bg-white/[0.06] border border-cream/10 p-3.5">
+                      <strong className="block text-seashell-pink text-[13px] font-[600] mb-1">
+                        {d.title}
+                      </strong>
+                      <span className="text-almond-silk text-[12px] font-[300]">{d.blurb}</span>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+
+              <Panel title="Senior practitioners only" hint={facilitators.summary}>
+                <div className="flex flex-col gap-2.5 pt-4">
+                  {facilitators.people.map((p) => (
+                    <div key={p.name} className="rounded-[12px] bg-white/[0.06] border border-cream/10 p-3.5 flex gap-3">
+                      <span className="shrink-0 grid place-items-center w-9 h-9 rounded-full bg-almond-silk text-expresso text-[13px] font-[600]">
+                        {p.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                      </span>
+                      <div>
+                        <strong className="block text-seashell-pink text-[13px] font-[600] leading-tight">
+                          {p.name}
+                        </strong>
+                        <span className="block text-almond-silk text-[10px] font-[600] tracking-[1.2px] uppercase mt-0.5 mb-1">
+                          {p.role}
+                        </span>
+                        <span className="text-almond-silk text-[11px] font-[300]">{p.bio}</span>
+                      </div>
+                    </div>
+                  ))}
+                  <p className="text-almond-silk text-[11px] font-[300] mt-1">
+                    Shipped and built at — {facilitators.employers.join(" · ")}
+                  </p>
+                </div>
+              </Panel>
+            </div>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a
+                href={mailto("AI Training enquiry")}
+                className="shrink-0 whitespace-nowrap rounded-full bg-seashell-pink text-expresso text-[15px] font-[500] px-6 py-3 hover:bg-white transition"
+              >
+                Talk to us about a cohort
+              </a>
+              <p className="text-almond-silk text-[13px] font-[300]">
+                Every engagement starts with a one-day taster for your leadership — the room builds a
+                working agent before you commit to anything.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== PRODUCTS ===== */}
+        <section id="products" className="py-16">
+          <SectionHead
+            eyebrow="Our products"
+            title="AI-native products we build and run"
+            sub="Everything we ship, from autonomous agents to civic platforms — the same practice we teach."
+          />
+          <div className="grid md:grid-cols-4 md:auto-rows-[1fr] gap-4">
+            {products.map((p) =>
+              p.flagship ? (
+                <FeatureTile key={p.title} product={p} />
+              ) : (
+                <SmallTile key={p.title} product={p} className="md:col-span-2" />
+              )
+            )}
           </div>
         </section>
 
@@ -559,19 +477,6 @@ export default function LandingPro() {
                 />
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* ===== DOMAINS ===== */}
-        <section id="domains" className="py-16">
-          <SectionHead
-            eyebrow="Reach"
-            title="Domains we work across"
-            sub="Deep expertise across technology and business workflows."
-          />
-          <div className="grid md:grid-cols-2 gap-8">
-            <DomainGroup label="Tech Domains" items={techDomains.flat()} />
-            <DomainGroup label="Business Workflows" items={businessDomains.flat()} />
           </div>
         </section>
       </div>
@@ -601,79 +506,110 @@ export default function LandingPro() {
 /* ------------------------------------------------------------ partials */
 
 /**
- * Facilitator credentials. The generic summary is always visible; names, roles
- * and bios are revealed only on request.
+ * Inline "show more" used inside a card. Animates on grid-template-rows so the
+ * panel eases to its natural height without hard-coding a max-height.
  */
-function Facilitators() {
-  const [shown, setShown] = useState(false);
+function Reveal({
+  label,
+  children,
+  tone = "dark",
+  className = "",
+}: {
+  label: string;
+  children: ReactNode;
+  tone?: "dark" | "light";
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const colour = tone === "light" ? "text-redwood" : "text-almond-silk";
 
   return (
-    <div className="mt-4 rounded-[20px] p-6 md:p-7 bg-white/[0.05] border border-cream/15">
-      <div className="flex flex-col md:flex-row md:items-center gap-5">
-        <div className="flex-1">
-          <h3 className="text-seashell-pink text-[17px] font-[500] mb-1.5">
-            Senior practitioners only
-          </h3>
-          <p className="text-almond-silk text-[13px] font-[300]">{facilitators.summary}</p>
-        </div>
-        <button
-          onClick={() => setShown((v) => !v)}
-          aria-expanded={shown}
-          className="shrink-0 self-start md:self-auto rounded-full border border-cream/35 text-seashell-pink text-[14px] font-[400] px-5 py-2.5 hover:bg-white/10 transition cursor-pointer"
-        >
-          {shown ? "Hide the team" : "Meet the facilitators"}
-        </button>
-      </div>
-
+    <div className={className}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className={`group inline-flex items-center gap-1.5 text-[13px] font-[500] cursor-pointer ${colour} hover:opacity-80 transition-opacity`}
+      >
+        {label}
+        <span className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}>⌄</span>
+      </button>
       <div
-        className={`overflow-hidden transition-[max-height,opacity] duration-500 ${
-          shown ? "max-h-[1400px] opacity-100 mt-6" : "max-h-0 opacity-0"
+        id={id}
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <div className="grid sm:grid-cols-2 gap-3">
-          {facilitators.people.map((p) => (
-            <div key={p.name} className="rounded-[16px] bg-white/[0.06] border border-cream/10 p-5 flex gap-4">
-              <span className="shrink-0 grid place-items-center w-11 h-11 rounded-full bg-almond-silk text-expresso text-[15px] font-[600]">
-                {p.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .slice(0, 2)
-                  .join("")}
-              </span>
-              <div>
-                <strong className="block text-seashell-pink text-[15px] font-[600] leading-tight">
-                  {p.name}
-                </strong>
-                <span className="block text-almond-silk text-[11px] font-[600] tracking-[1.2px] uppercase mt-0.5 mb-1.5">
-                  {p.role}
-                </span>
-                <span className="text-almond-silk text-[12px] font-[300]">{p.bio}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="text-almond-silk text-[12px] font-[300] mt-4">
-          Our facilitators have shipped and built at —{" "}
-          <span className="text-almond-silk">{facilitators.employers.join(" · ")}</span>
-        </p>
+        <div className="overflow-hidden">{children}</div>
       </div>
     </div>
   );
 }
 
+/** A foldable panel on the dark training card. Collapsed by default. */
+function Panel({ title, hint, children }: { title: string; hint: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
+  return (
+    <div className="rounded-[20px] bg-white/[0.05] border border-cream/15 p-5 md:p-6 self-start w-full">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className="w-full text-left cursor-pointer group"
+      >
+        <span className="flex items-start justify-between gap-3">
+          <span className="text-seashell-pink text-[16px] font-[500] leading-snug">{title}</span>
+          <span
+            className={`shrink-0 grid place-items-center w-6 h-6 rounded-full border border-cream/30 text-almond-silk text-[12px] transition-transform duration-300 ${
+              open ? "rotate-45" : ""
+            }`}
+            aria-hidden
+          >
+            +
+          </span>
+        </span>
+        <span className="block text-almond-silk text-[12px] font-[300] mt-1.5">{hint}</span>
+      </button>
+      <div
+        id={id}
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function TagPill({ tag, tone }: { tag: string; tone: "dark" | "light" }) {
+  return (
+    <span
+      className={`inline-block text-[10px] font-[600] tracking-[1.5px] uppercase px-2.5 py-1 rounded-full ${
+        tone === "dark"
+          ? "bg-white/10 text-almond-silk border border-cream/20"
+          : "bg-expresso/10 text-redwood border border-redwood/20"
+      }`}
+    >
+      {tag}
+    </span>
+  );
+}
+
 function FeatureTile({ product }: { product: Product }) {
   return (
-    <div className="md:col-span-2 md:row-span-3 rounded-[24px] p-7 flex flex-col justify-between bg-[linear-gradient(150deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_18px_0_rgba(0,0,0,0.18)]">
+    <div className="md:col-span-2 md:row-span-2 rounded-[24px] p-7 flex flex-col justify-between bg-[linear-gradient(150deg,#6A534D_0%,#5C4742_100%)] shadow-[0_3px_18px_0_rgba(0,0,0,0.18)]">
       <div>
-        <p className="text-almond-silk text-[11px] font-[600] tracking-[2px] uppercase mb-4">
-          {product.tag}
-        </p>
+        <TagPill tag={product.tag} tone="dark" />
         <Image
           src={product.image}
           alt={product.title}
           width={72}
           height={72}
-          className="object-contain opacity-90 mb-4"
+          className="object-contain opacity-90 mb-4 mt-5"
         />
         <h3 className="text-seashell-pink text-[26px] font-[600] mb-1">{product.title}</h3>
         <p className="text-almond-silk text-[14px] font-[400] mb-3">{product.role}</p>
@@ -706,19 +642,24 @@ function FeatureTile({ product }: { product: Product }) {
 
 function SmallTile({ product, className = "" }: { product: Product; className?: string }) {
   return (
-    <div className={`rounded-[24px] p-6 flex items-start gap-5 bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] shadow-[0_3px_20px_0_rgba(0,0,0,0.15)] ${className}`}>
+    <div
+      className={`rounded-[24px] p-6 flex items-start gap-5 bg-[linear-gradient(to_bottom,#F2E3E1_0%,#DBC2BD_100%)] shadow-[0_3px_20px_0_rgba(0,0,0,0.15)] ${className}`}
+    >
       <Image
         src={product.image}
         alt={product.title}
-        width={64}
-        height={64}
-        className="object-contain opacity-70 shrink-0"
+        width={56}
+        height={56}
+        className="object-contain opacity-70 shrink-0 mt-1"
       />
       <div className="flex flex-col">
-        <h3 className="text-expresso text-[20px] font-[600] leading-tight">{product.title}</h3>
+        <div className="mb-2">
+          <TagPill tag={product.tag} tone="light" />
+        </div>
+        <h3 className="text-expresso text-[19px] font-[600] leading-tight">{product.title}</h3>
         <p className="text-redwood text-[13px] font-[500] mb-1.5">{product.role}</p>
         <p className="text-liver-brown text-[14px] font-[300] mb-3">{product.description}</p>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="mt-auto flex flex-wrap items-center gap-4">
           <a
             href={product.url}
             target="_blank"
@@ -749,31 +690,6 @@ function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: string; 
       <p className="text-redwood text-[12px] font-[600] tracking-[3px] uppercase mb-2">{eyebrow}</p>
       <h2 className="text-deep-mocha text-[30px] md:text-[36px] font-[600] leading-tight">{title}</h2>
       <p className="text-liver-brown text-[16px] md:text-[17px] font-[300] mt-1">{sub}</p>
-    </div>
-  );
-}
-
-function DomainGroup({ label, items }: { label: string; items: { src: string; title: string; subtitle: string }[] }) {
-  return (
-    <div>
-      <h3 className="text-redwood text-[13px] font-[600] tracking-[2px] uppercase mb-4">{label}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {items.map((d) => (
-          <div key={d.title} className="rounded-[16px] p-4 bg-white/50 border border-white/60 flex items-center gap-4">
-            <Image
-              src={asset(d.src)}
-              alt={d.title}
-              width={40}
-              height={40}
-              className="object-contain opacity-80 shrink-0"
-            />
-            <div>
-              <strong className="block text-expresso text-[16px] font-[600]">{d.title}</strong>
-              <span className="text-liver-brown text-[12px] font-[300]">{d.subtitle}</span>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
