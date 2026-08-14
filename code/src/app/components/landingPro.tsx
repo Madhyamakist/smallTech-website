@@ -30,6 +30,11 @@ const clients = [
   { name: "Super Procure", logo: "/super procure.png", url: "", w: 200, h: 80 },
   { name: "Loblaws", logo: "/loblaws.svg", url: "", w: 200, h: 36 },
   { name: "Digital Futurists", logo: "/df.png", url: "", w: 170, h: 48 },
+  { name: "Avanse", logo: "/avanse-logo.svg", url: "", w: 170, h: 45 },
+  { name: "TruHome", logo: "/truhome-logo.svg", url: "", w: 140, h: 70 },
+  { name: "Ebco", logo: "/ebco.png", url: "", w: 120, h: 70 },
+  { name: "Warburg Pincus", logo: "/Warburg-pincus.png", url: "", w: 160, h: 89 },
+  { name: "Parksons", logo: "/Parksons-logo-1.png", url: "", w: 200, h: 46 },
 ];
 
 const mailto = (subject: string) =>

@@ -30,6 +30,11 @@ const clients = [
   { name: "Super Procure", logo: "/super procure.png",  url: "", showName: false, logoW: 220, logoH: 90  },
   { name: "Loblaws",     logo: "/loblaws.svg",           url: "", showName: false, logoW: 220, logoH: 38  },
   { name: "Digital Futurists", logo: "/df.png",         url: "", showName: false, logoW: 180, logoH: 50  },
+  { name: "Avanse",      logo: "/avanse-logo.svg",       url: "", showName: false, logoW: 170, logoH: 45  },
+  { name: "TruHome",     logo: "/truhome-logo.svg",      url: "", showName: false, logoW: 140, logoH: 70  },
+  { name: "Ebco",        logo: "/ebco.png",              url: "", showName: false, logoW: 120, logoH: 70  },
+  { name: "Warburg Pincus", logo: "/Warburg-pincus.png", url: "", showName: false, logoW: 160, logoH: 89 },
+  { name: "Parksons",    logo: "/Parksons-logo-1.png",   url: "", showName: false, logoW: 200, logoH: 46  },
 ];
 
 type Client = typeof clients[number];
